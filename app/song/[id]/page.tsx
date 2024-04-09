@@ -1,7 +1,8 @@
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { songs } from "@/lib/songs";
+import { SongMetadata, songs } from "@/lib/songs";
+import { Player } from "./Player";
 
 const findSongById = (id: string) => songs.find((song) => song.id === id);
 
@@ -54,6 +55,25 @@ export default function Page({ params }: Props) {
           </div>
         )}
       </div>
+      <PlayersList song={song} />
     </main>
+  );
+}
+
+function PlayersList({ song }: { song: SongMetadata }) {
+  const urls = song.youTubeURLs;
+
+  if (urls.length === 0) {
+    return <div>This song doesn&apos;t have any YouTube URLs yet.</div>;
+  }
+
+  return (
+    <ul>
+      {urls.map((url) => (
+        <li key={url} className="mt-10 first:mt-0">
+          <Player url={url} />
+        </li>
+      ))}
+    </ul>
   );
 }
