@@ -14,6 +14,8 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const playbackRateInputId = `playbackRate-${url}`;
 
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+
   // Note: react-player doesn't support SSR. See:
   // https://github.com/cookpete/react-player/issues/1474#issuecomment-1184645105
   // That solution recommends using next/dynamic, but it's simpler to use the
@@ -22,9 +24,14 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
   // https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
   return (
     <ClientOnly>
-      <ReactPlayer url={url} controls={true} playbackRate={playbackRate} />
+      <ReactPlayer
+        url={url}
+        controls={true}
+        playbackRate={playbackRate}
+        onReady={() => setIsPlayerReady(true)}
+      />
 
-      <div className="w-1/2 mx-auto mt-2">
+      <div className={`w-1/2 mx-auto mt-2 ${isPlayerReady ? "" : "invisible"}`}>
         <label className="block mb-1" htmlFor={playbackRateInputId}>
           Playback Rate
         </label>
