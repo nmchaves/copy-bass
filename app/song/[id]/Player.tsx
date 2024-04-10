@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ReactPlayer from "react-player/youtube";
+import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Slider } from "@/components/ui/Slider";
 
@@ -31,7 +32,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
         onReady={() => setIsPlayerReady(true)}
       />
 
-      <div className={`w-1/2 mx-auto mt-2 ${isPlayerReady ? "" : "invisible"}`}>
+      <div className={cn("w-1/2 mx-auto mt-2", { invisible: !isPlayerReady })}>
         <div className="mb-2 flex items-center justify-between">
           <label className="font-medium" htmlFor={playbackRateInputId}>
             Playback Rate
