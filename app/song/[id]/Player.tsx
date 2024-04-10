@@ -32,24 +32,25 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
       />
 
       <div className={`w-1/2 mx-auto mt-2 ${isPlayerReady ? "" : "invisible"}`}>
-        <label className="block mb-1" htmlFor={playbackRateInputId}>
-          Playback Rate
-        </label>
-        <div className="flex">
-          <Slider
-            id={playbackRateInputId}
-            value={[playbackRate]}
-            min={0.1}
-            max={2}
-            step={0.1}
-            onValueChange={([newValue]) => {
-              setPlaybackRate(newValue);
-            }}
-          />
-          <span className="ml-2 font-medium" aria-label="Playback Rate Value">
+        <div className="mb-2 flex items-center justify-between">
+          <label className="font-medium" htmlFor={playbackRateInputId}>
+            Playback Rate
+          </label>
+          <span className="ml-1 font-medium" aria-label="Playback Rate Value">
             {playbackRate}
           </span>
         </div>
+
+        <Slider
+          id={playbackRateInputId}
+          value={[playbackRate]}
+          min={0.1}
+          max={2}
+          step={0.1}
+          onValueChange={([newValue]) => {
+            setPlaybackRate(newValue);
+          }}
+        />
       </div>
     </ClientOnly>
   );
