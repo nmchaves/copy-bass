@@ -1,5 +1,5 @@
+import { songs } from "@/lib/songs";
 import { Song } from "./Song";
-import { songs } from "../lib/songs";
 
 export default function Home() {
   return (
