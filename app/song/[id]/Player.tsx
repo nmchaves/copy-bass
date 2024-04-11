@@ -50,8 +50,9 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
           width={playerDim.width}
           height={playerDim.height}
           controls={true}
-          playbackRate={playbackRate}
+          loop={true}
           onReady={() => setIsPlayerReady(true)}
+          playbackRate={playbackRate}
         />
       </div>
 
