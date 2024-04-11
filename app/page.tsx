@@ -1,4 +1,5 @@
 import { SongMetadata, songs } from "@/lib/songs";
+import { H1 } from "@/components/ui/Heading";
 import { SongCard } from "./SongCard";
 import { GenreFilter, GenreQueryKey } from "./GenreFilter";
 import { Search, SearchQueryKey } from "./Search";
@@ -19,9 +20,7 @@ export default function Home({
 
   return (
     <main className="flex flex-col items-center">
-      <h1 className="text-3xl font-semibold mb-4">
-        Nico&apos;s Music Practice 🎸
-      </h1>
+      <H1 className="mb-4">Nico&apos;s Music Practice 🎸</H1>
       <h2 className="text-xl font-semibold mb-4">Songs</h2>
       <div className="mb-4 flex items-center">
         <Search />

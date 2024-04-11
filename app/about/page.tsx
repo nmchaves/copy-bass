@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { H1 } from "@/components/ui/Heading";
 
 export const metadata: Metadata = {
   title: "About Nico's Music Site",
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex flex-col items-center">
-      <h1 className="text-3xl font-semibold mb-4">About This Site</h1>
+      <H1 className="mb-4">About This Site</H1>
       <p>TODO: Explain the purpose of this site</p>
     </main>
   );

@@ -1,3 +1,4 @@
+import { H1 } from "@/components/ui/Heading";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +9,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex flex-col items-center">
-      <h1 className="text-3xl font-semibold mb-4">Resources</h1>
+      <H1 className="mb-4">Resources</H1>
       <p>
         TODO: Add some helpful resources, such as videos/links about how to
         emulate the tone of various bassists, tutorials on reading sheet music,

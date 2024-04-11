@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SongMetadata, songs } from "@/lib/songs";
 import { Button } from "@/components/ui/Button";
+import { H1 } from "@/components/ui/Heading";
 import { Player } from "./Player";
 
 const findSongById = (id: string) => songs.find((song) => song.id === id);
@@ -43,9 +44,9 @@ export default function Page({ params }: Props) {
       <Link href="/" className="self-start">
         <Button variant="link">&larr; All Songs</Button>
       </Link>
-      <h1 className="text-2xl mt-4 mb-10">
+      <H1 className="mt-4 mb-10">
         {song.title} by {song.artist}
-      </h1>
+      </H1>
       <div className="mb-12 min-w-72 max-w-md p-4 border border-cyan-950 rounded">
         <div className="mb-1 font-semibold">Tuning</div>
         <div>{song.tuning}</div>
