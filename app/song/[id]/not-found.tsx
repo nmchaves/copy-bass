@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import bruceSearching from "@/public/bruce_searching.jpg";
 
 export default function NotFound() {
@@ -18,7 +19,9 @@ export default function NotFound() {
         Holy smokes. I looked all over, but I couldn&apos;t find the song
         you&apos;re looking for.
       </p>
-      <Link href="/">Back to Home</Link>
+      <Link href="/">
+        <Button variant="link">Back to Home</Button>
+      </Link>
     </main>
   );
 }
