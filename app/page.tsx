@@ -20,8 +20,7 @@ export default function Home({
 
   return (
     <main className="flex flex-col items-center">
-      <H1 className="mb-4">Nico&apos;s Music Practice 🎸</H1>
-      <h2 className="text-xl font-semibold mb-4">Songs</h2>
+      <H1 className="mb-8">Nico&apos;s Practice Songs 🎸</H1>
       <div className="mb-4 flex items-center">
         <Search />
         <GenreFilter />
