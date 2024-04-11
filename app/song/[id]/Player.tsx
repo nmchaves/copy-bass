@@ -4,6 +4,7 @@ import { useState } from "react";
 import ReactPlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/ui/ClientOnly";
+import { Skeleton } from "@/components/ui/Skeleton";
 import { Slider } from "@/components/ui/Slider";
 
 // Note: react-player doesn't support SSR. See:
@@ -18,6 +19,12 @@ const ClientOnlyReactPlayer: React.FC<YouTubePlayerProps> = (props) => (
   </ClientOnly>
 );
 
+/** Player dimensions in pixels */
+const playerDim = {
+  width: 640,
+  height: 360,
+} as const;
+
 export const Player: React.FC<{ url: string }> = ({ url }) => {
   // The YouTube player UI already allows the user to customize the playback
   // speed. But I don't like repeatedly opening/closing those settings while I'm
@@ -31,12 +38,22 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   return (
     <>
-      <ClientOnlyReactPlayer
-        url={url}
-        controls={true}
-        playbackRate={playbackRate}
-        onReady={() => setIsPlayerReady(true)}
+      <Skeleton
+        className={cn(`w-[${playerDim.width}px] h-[${playerDim.height}px]`, {
+          hidden: isPlayerReady,
+        })}
       />
+      {/* For some reason, `react-player` doesn't update its `className` on re-renders. So we need a wrapper */}
+      <div className={isPlayerReady ? "visible" : "invisible"}>
+        <ClientOnlyReactPlayer
+          url={url}
+          width={playerDim.width}
+          height={playerDim.height}
+          controls={true}
+          playbackRate={playbackRate}
+          onReady={() => setIsPlayerReady(true)}
+        />
+      </div>
 
       <div className={cn("w-1/2 mx-auto mt-2", { invisible: !isPlayerReady })}>
         <div className="mb-2 flex items-center justify-between">
