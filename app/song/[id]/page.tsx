@@ -39,7 +39,7 @@ export default function Page({ params }: Props) {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex flex-col items-center">
       <Link href="/" className="self-start">
         <Button variant="link">&larr; All Songs</Button>
       </Link>

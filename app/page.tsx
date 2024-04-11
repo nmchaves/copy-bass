@@ -3,7 +3,7 @@ import { Song } from "./Song";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center">
+    <main className="flex flex-col items-center">
       <h1 className="text-3xl font-semibold mb-4">
         Nico&apos;s Music Practice 🎸
       </h1>
