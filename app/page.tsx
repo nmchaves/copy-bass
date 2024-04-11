@@ -40,7 +40,12 @@ export default function Home({
       <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filteredSongs.map((song) => (
           <div key={song.title} className="m-4">
-            <SongCard song={song} />
+            <SongCard
+              song={song}
+              // Don't show the genre icon when filtering by genre. It feels weird/redundant
+              // to see a bunch of cards with the same icon.
+              displayGenreIcon={genreFilter == null}
+            />
           </div>
         ))}
       </div>
