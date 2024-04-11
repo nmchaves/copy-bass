@@ -25,7 +25,7 @@ export const Search = () => {
     <Input
       placeholder="Filter by title/artist"
       defaultValue={searchParams.get(searchQueryKey)?.toString()}
-      onChange={(e) => handleSearch(e.target.value)}
+      onChange={(e) => handleSearch(e.target.value.trim())}
       className="max-w-md mb-4"
     />
   );
