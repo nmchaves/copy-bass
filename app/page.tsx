@@ -1,4 +1,4 @@
-import { songs } from "@/lib/songs";
+import { SongMetadata, songs } from "@/lib/songs";
 import { SongCard } from "./SongCard";
 import { GenreFilter, GenreQueryKey } from "./GenreFilter";
 import { Search, SearchQueryKey } from "./Search";
@@ -11,20 +11,11 @@ export default function Home({
   const searchQuery = searchParams?.query;
   const genreFilter = searchParams?.genre;
 
-  let filteredSongs = songs;
-  // TODO: factor out a function
-  if (searchQuery) {
-    const lowerSearchQuery = searchQuery.toLowerCase();
-    filteredSongs = songs.filter(
-      (song) =>
-        song.title.toLowerCase().includes(lowerSearchQuery) ||
-        song.artist.toLowerCase().includes(lowerSearchQuery),
-    );
-  }
-
-  if (genreFilter) {
-    filteredSongs = filteredSongs.filter((song) => song.genre === genreFilter);
-  }
+  const filteredSongs = filterSongs({
+    allSongs: songs,
+    searchQuery,
+    genreFilter,
+  });
 
   return (
     <main className="flex flex-col items-center">
@@ -51,4 +42,31 @@ export default function Home({
       </div>
     </main>
   );
+}
+
+function filterSongs({
+  allSongs,
+  searchQuery,
+  genreFilter,
+}: {
+  allSongs: Array<SongMetadata>;
+  searchQuery: string | undefined;
+  genreFilter: string | undefined;
+}) {
+  let filteredSongs = allSongs;
+
+  if (searchQuery) {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    filteredSongs = songs.filter(
+      (song) =>
+        song.title.toLowerCase().includes(lowerSearchQuery) ||
+        song.artist.toLowerCase().includes(lowerSearchQuery),
+    );
+  }
+
+  if (genreFilter) {
+    filteredSongs = filteredSongs.filter((song) => song.genre === genreFilter);
+  }
+
+  return filteredSongs;
 }
