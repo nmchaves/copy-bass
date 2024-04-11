@@ -69,9 +69,18 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
         <Slider
           id={playbackRateInputId}
           value={[playbackRate]}
-          min={0.1}
+          // Note: YouTube videos seem to typically allow for 0.25x to 2x speed,
+          // but that's not guaranteed. Ideally, we'd use the player's
+          // `getAvailablePlaybackRates()` method to determine the given video's
+          // available playback rates. However, that method returns an array,
+          // while this component expects min/max/step. But in practice, this is
+          // fine. If we end up allowing the user to select an invalid playback
+          // rate for the given video, then the player is supposed to round the
+          // proposed rate down to a valid value. For more details, see:
+          // https://developers.google.com/youtube/iframe_api_reference#setPlaybackRate
+          min={0.25}
           max={2}
-          step={0.1}
+          step={0.05}
           onValueChange={([newValue]) => {
             setPlaybackRate(newValue);
           }}
