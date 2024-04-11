@@ -62,7 +62,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
             Playback Rate
           </label>
           <span className="ml-1 font-medium" aria-label="Playback Rate Value">
-            {playbackRate}
+            {playbackRate}x
           </span>
         </div>
 
