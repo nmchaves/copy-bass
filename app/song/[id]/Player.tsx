@@ -46,9 +46,11 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
   return (
     <>
       <Skeleton
-        className={cn(`w-[${playerDim.width}px] h-[${playerDim.height}px]`, {
-          hidden: isPlayerReady,
-        })}
+        className={cn({ hidden: isPlayerReady })}
+        style={{
+          width: playerDim.width,
+          height: playerDim.height,
+        }}
       />
       {/* For some reason, `react-player` doesn't update its `className` on re-renders. So we need a wrapper */}
       <div className={isPlayerReady ? "visible" : "invisible"}>
