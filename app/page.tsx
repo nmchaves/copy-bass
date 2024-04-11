@@ -1,5 +1,5 @@
 import { songs } from "@/lib/songs";
-import { Song } from "./Song";
+import { SongCard } from "./SongCard";
 import { Search, SearchQueryKey } from "./Search";
 
 export default function Home({
@@ -29,7 +29,7 @@ export default function Home({
       <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filteredSongs.map((song) => (
           <div key={song.title} className="m-4">
-            <Song song={song} />
+            <SongCard song={song} />
           </div>
         ))}
       </div>

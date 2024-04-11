@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SongMetadata } from "../lib/songs";
 
-export const Song: React.FC<{ song: SongMetadata }> = ({ song }) => {
+export const SongCard: React.FC<{ song: SongMetadata }> = ({ song }) => {
   return (
     <Link
       href={`/song/${song.id}`}
