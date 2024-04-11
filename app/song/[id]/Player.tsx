@@ -1,10 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import ReactPlayer from "react-player/youtube";
+import ReactPlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Slider } from "@/components/ui/Slider";
+
+// Note: react-player doesn't support SSR. See:
+// https://github.com/cookpete/react-player/issues/1474#issuecomment-1184645105
+// That solution recommends using next/dynamic, but it's simpler to use the
+// `ClientOnly` component. For example, the next/dynamic approach would require
+// an extra wrapper in order to use refs. See:
+// https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
+const ClientOnlyReactPlayer: React.FC<YouTubePlayerProps> = (props) => (
+  <ClientOnly>
+    <ReactPlayer {...props} />
+  </ClientOnly>
+);
 
 export const Player: React.FC<{ url: string }> = ({ url }) => {
   // The YouTube player UI already allows the user to customize the playback
@@ -17,15 +29,9 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
-  // Note: react-player doesn't support SSR. See:
-  // https://github.com/cookpete/react-player/issues/1474#issuecomment-1184645105
-  // That solution recommends using next/dynamic, but it's simpler to use the
-  // `ClientOnly` component. For example, the next/dynamic approach would require
-  // an extra wrapper in order to use refs. See:
-  // https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
   return (
-    <ClientOnly>
-      <ReactPlayer
+    <>
+      <ClientOnlyReactPlayer
         url={url}
         controls={true}
         playbackRate={playbackRate}
@@ -53,6 +59,6 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
           }}
         />
       </div>
-    </ClientOnly>
+    </>
   );
 };
