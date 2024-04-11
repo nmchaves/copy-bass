@@ -25,7 +25,11 @@ export default function Home({
         <Search />
         <GenreFilter />
       </div>
-      <SongsGrid filteredSongs={filteredSongs} genreFilter={genreFilter} />
+      {filteredSongs.length === 0 ? (
+        <NoSongs />
+      ) : (
+        <SongsGrid filteredSongs={filteredSongs} genreFilter={genreFilter} />
+      )}
     </main>
   );
 }
@@ -51,6 +55,10 @@ function SongsGrid({
       ))}
     </div>
   );
+}
+
+function NoSongs() {
+  return <p className="mt-8 font-semibold">No songs match your search</p>;
 }
 
 function filterSongs({
