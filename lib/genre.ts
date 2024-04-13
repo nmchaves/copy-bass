@@ -24,3 +24,19 @@ export const genreEmojiDict: Record<MusicGenre, string> = {
   [MusicGenre.REGGAE]: "🇯🇲",
   [MusicGenre.REGGAE_ROCK]: "🏄",
 };
+
+export function parseGenreFilter(
+  rawGenre: string | undefined,
+): MusicGenre | undefined {
+  if (!rawGenre) {
+    return undefined;
+  }
+
+  // If the value is invalid, ignore it by returning undefined.
+  return isMusicGenre(rawGenre) ? rawGenre : undefined;
+}
+
+function isMusicGenre(val: string): val is MusicGenre {
+  const validGenreFilters = Object.values(MusicGenre);
+  return validGenreFilters.includes(val as MusicGenre);
+}

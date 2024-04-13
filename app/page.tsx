@@ -1,4 +1,5 @@
 import { SongMetadata, songs } from "@/lib/songs";
+import { MusicGenre, parseGenreFilter } from "@/lib/genre";
 import { H1 } from "@/components/ui/Heading";
 import { SongCard } from "./SongCard";
 import { GenreFilter, GenreQueryKey } from "./GenreFilter";
@@ -10,7 +11,7 @@ export default function Home({
   searchParams?: Partial<Record<SearchQueryKey | GenreQueryKey, string>>;
 }) {
   const searchQuery = searchParams?.query;
-  const genreFilter = searchParams?.genre;
+  const genreFilter = parseGenreFilter(searchParams?.genre);
 
   const filteredSongs = filterSongs({
     allSongs: songs,
@@ -68,7 +69,7 @@ function filterSongs({
 }: {
   allSongs: Array<SongMetadata>;
   searchQuery: string | undefined;
-  genreFilter: string | undefined;
+  genreFilter: MusicGenre | undefined;
 }) {
   let filteredSongs = allSongs;
 

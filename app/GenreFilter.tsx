@@ -1,7 +1,12 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { genreEmojiDict, genreLabelDict, MusicGenre } from "@/lib/genre";
+import {
+  genreEmojiDict,
+  genreLabelDict,
+  MusicGenre,
+  parseGenreFilter,
+} from "@/lib/genre";
 import {
   Select,
   SelectContent,
@@ -34,7 +39,9 @@ export const GenreFilter = () => {
 
   return (
     <Select
-      defaultValue={searchParams.get(genreQueryKey) ?? undefined}
+      defaultValue={parseGenreFilter(
+        searchParams.get(genreQueryKey) ?? undefined,
+      )}
       onValueChange={(value) => handleSelectChange(value as SelectValue)}
     >
       <SelectTrigger className="ml-2 w-[240px]">
