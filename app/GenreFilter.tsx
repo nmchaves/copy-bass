@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { genreEmojiDict, genreLabelDict, MusicGenre } from "@/lib/songs";
+import { genreEmojiDict, genreLabelDict, MusicGenre } from "@/lib/genre";
 import {
   Select,
   SelectContent,

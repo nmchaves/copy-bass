@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { genreEmojiDict, genreLabelDict, SongMetadata } from "../lib/songs";
+import { SongMetadata } from "@/lib/songs";
+import { genreEmojiDict, genreLabelDict } from "@/lib/genre";
 
 export const SongCard: React.FC<{
   song: SongMetadata;
