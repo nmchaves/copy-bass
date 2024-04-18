@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import ReactPlayer, { YouTubePlayerProps } from "react-player/youtube";
+import { forwardRef, useRef, useState } from "react";
+import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/ui/ClientOnly";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Slider } from "@/components/ui/Slider";
 
@@ -13,11 +15,15 @@ import { Slider } from "@/components/ui/Slider";
 // `ClientOnly` component. For example, the next/dynamic approach would require
 // an extra wrapper in order to use refs. See:
 // https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
-const ClientOnlyReactPlayer: React.FC<YouTubePlayerProps> = (props) => (
+const ClientOnlyYouTubePlayer: React.FC<YouTubePlayerProps> = forwardRef<
+  YouTubePlayer,
+  YouTubePlayerProps
+>((props, ref) => (
   <ClientOnly>
-    <ReactPlayer {...props} />
+    <YouTubePlayer ref={ref} {...props} />
   </ClientOnly>
-);
+));
+ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
 
 /** Player dimensions in pixels */
 const playerDim = {
@@ -26,6 +32,8 @@ const playerDim = {
 } as const;
 
 export const Player: React.FC<{ url: string }> = ({ url }) => {
+  const youTubePlayerRef = useRef<YouTubePlayer>(null);
+
   // The YouTube player UI already allows the user to customize the playback
   // speed. But I don't like repeatedly opening/closing those settings while I'm
   // practicing.
@@ -43,6 +51,26 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
+  const [trackDuration, setTrackDuration] = useState<number>();
+
+  const [customLoopStartSeconds, setCustomLoopStartSeconds] =
+    useState<number>();
+  const customLoopStartInputId = `customLoopStart-${url}`;
+  const [customLoopEndSeconds, setCustomLoopEndSeconds] = useState<number>();
+  const customLoopEndInputId = `customLoopEnd-${url}`;
+
+  // When the user specifies a custom loop, the video should automatically play
+  // at the start of the custom loop. However, the `seekTo` method doesn't do
+  // that. So we need to manage the playing state manually.
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const playStart = () => {
+    if (youTubePlayerRef.current) {
+      youTubePlayerRef.current.seekTo(customLoopStartSeconds ?? 0);
+      setIsPlaying(true);
+    }
+  };
+
   return (
     <>
       <Skeleton
@@ -54,13 +82,17 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
       />
       {/* For some reason, `react-player` doesn't update its `className` on re-renders. So we need a wrapper */}
       <div className={isPlayerReady ? "visible" : "invisible"}>
-        <ClientOnlyReactPlayer
+        <ClientOnlyYouTubePlayer
+          ref={youTubePlayerRef}
           url={url}
           width={playerDim.width}
           height={playerDim.height}
           controls={true}
-          loop={true}
+          playing={isPlaying}
           onReady={() => setIsPlayerReady(true)}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onDuration={(duration) => setTrackDuration(duration)}
           playbackRate={playbackRate}
           onPlaybackRateChange={(newRate: number) => {
             if (
@@ -72,10 +104,21 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
               setPlaybackRate(newRate);
             }
           }}
+          onProgress={({ playedSeconds }) => {
+            if (
+              customLoopEndSeconds != null &&
+              playedSeconds >= customLoopEndSeconds
+            ) {
+              playStart();
+            }
+          }}
+          // Use `onEnded` instead of `loop` so we can account for custom loops.
+          loop={false}
+          onEnded={() => playStart()}
         />
       </div>
 
-      <div className={cn("w-1/2 mx-auto mt-2", { invisible: !isPlayerReady })}>
+      <div className={cn("w-2/3 mx-auto mt-2", { invisible: !isPlayerReady })}>
         <div className="mb-2 flex items-center justify-between">
           <label className="font-medium" htmlFor={playbackRateInputId}>
             Playback Rate
@@ -108,6 +151,43 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
             setReactSliderPlaybackRateChangeDate(new Date());
           }}
         />
+        <div className="mt-6 flex items-center justify-between gap-3">
+          <div className="w-full">
+            <Label htmlFor={customLoopStartInputId} className="block mb-2">
+              Loop Start
+            </Label>
+            <Input
+              id={customLoopStartInputId}
+              placeholder="Start (in seconds)"
+              type="number"
+              min={0}
+              max={trackDuration}
+              value={customLoopStartSeconds?.toString() ?? ""}
+              onChange={(e) => {
+                const valStr = e.target.value;
+                setCustomLoopStartSeconds(valStr ? Number(valStr) : undefined);
+              }}
+            />
+          </div>
+
+          <div className="w-full">
+            <Label htmlFor={customLoopEndInputId} className="block mb-2">
+              Loop End
+            </Label>
+            <Input
+              id={customLoopEndInputId}
+              placeholder="End (in seconds)"
+              type="number"
+              min={0}
+              max={trackDuration}
+              value={customLoopEndSeconds?.toString() ?? ""}
+              onChange={(e) => {
+                const valStr = e.target.value;
+                setCustomLoopEndSeconds(valStr ? Number(valStr) : undefined);
+              }}
+            />
+          </div>
+        </div>
       </div>
     </>
   );
