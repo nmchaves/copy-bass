@@ -44,7 +44,7 @@ export default function Page({ params }: Props) {
       <Link href="/" className="self-start">
         <Button variant="link">&larr; All Songs</Button>
       </Link>
-      <H1 className="mt-4 mb-10">
+      <H1 className="mt-4 mb-10 text-center">
         {song.title} by {song.artist}
       </H1>
       <div className="mb-12 min-w-72 max-w-md p-4 border border-cyan-950 rounded">
