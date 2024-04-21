@@ -25,12 +25,6 @@ const ClientOnlyYouTubePlayer: React.FC<YouTubePlayerProps> = forwardRef<
 ));
 ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
 
-/** Player dimensions in pixels */
-const playerDim = {
-  width: 640,
-  height: 360,
-} as const;
-
 export const Player: React.FC<{ url: string }> = ({ url }) => {
   const youTubePlayerRef = useRef<YouTubePlayer>(null);
 
@@ -73,20 +67,21 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   return (
     <>
-      <Skeleton
-        className={cn({ hidden: isPlayerReady })}
-        style={{
-          width: playerDim.width,
-          height: playerDim.height,
-        }}
-      />
-      {/* For some reason, `react-player` doesn't update its `className` on re-renders. So we need a wrapper */}
-      <div className={isPlayerReady ? "visible" : "invisible"}>
+      <ResponsivePlayerWrapper>
+        <Skeleton
+          hidden={isPlayerReady}
+          className={responsivePlayerStyling.className}
+          style={{
+            width: responsivePlayerStyling.width,
+            height: responsivePlayerStyling.height,
+          }}
+        />
         <ClientOnlyYouTubePlayer
           ref={youTubePlayerRef}
           url={url}
-          width={playerDim.width}
-          height={playerDim.height}
+          className={responsivePlayerStyling.className}
+          width={responsivePlayerStyling.width}
+          height={responsivePlayerStyling.height}
           controls={true}
           playing={isPlaying}
           onReady={() => setIsPlayerReady(true)}
@@ -116,7 +111,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
           loop={false}
           onEnded={() => playStart()}
         />
-      </div>
+      </ResponsivePlayerWrapper>
 
       <div className={cn("w-2/3 mx-auto mt-2", { invisible: !isPlayerReady })}>
         <div className="mb-2 flex items-center justify-between">
@@ -192,6 +187,32 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
     </>
   );
 };
+
+/**
+ * A wrapper to make the player responsive. For more info, see the docs:
+ * https://github.com/cookpete/react-player?tab=readme-ov-file#responsive-player
+ */
+function ResponsivePlayerWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className={"relative pt-[56.25%] max-w-[640px] max-h-[360px] mx-auto"}>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Some styling to apply to both the player (which should be responsive) and the
+ * loading skeleton, which should match the dimensions of the player.
+ */
+const responsivePlayerStyling = {
+  className: "absolute top-0 left-0",
+  // Note: Ideally, we'd use `w-full` and `h-full` from Tailwind. But if we don't
+  // pass the `width` and `height` props to `react-player`, then `react-player`
+  // will automatically apply default inline styles for width/height. Those
+  // inline styles would supersede our class-based width/height styles.
+  width: "100%",
+  height: "100%",
+} as const;
 
 /**
  * A function to determine whether a change to the `react-player` component's
