@@ -9,22 +9,6 @@ import { Label } from "@/components/ui/Label";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Slider } from "@/components/ui/Slider";
 
-// Note: react-player doesn't support SSR. See:
-// https://github.com/cookpete/react-player/issues/1474#issuecomment-1184645105
-// That solution recommends using next/dynamic, but it's simpler to use the
-// `ClientOnly` component. For example, the next/dynamic approach would require
-// an extra wrapper in order to use refs. See:
-// https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
-const ClientOnlyYouTubePlayer: React.FC<YouTubePlayerProps> = forwardRef<
-  YouTubePlayer,
-  YouTubePlayerProps
->((props, ref) => (
-  <ClientOnly>
-    <YouTubePlayer ref={ref} {...props} />
-  </ClientOnly>
-));
-ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
-
 export const Player: React.FC<{ url: string }> = ({ url }) => {
   const youTubePlayerRef = useRef<YouTubePlayer>(null);
 
@@ -187,6 +171,24 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
     </>
   );
 };
+
+/**
+ * Note: `react-player` doesn't support SSR. See:
+ * https://github.com/cookpete/react-player/issues/1474#issuecomment-1184645105
+ * That solution recommends using `next/dynamic`, but it's simpler to use the
+ * `ClientOnly` component. For example, the `next/dynamic` approach would require
+ * an extra wrapper in order to use refs. See:
+ * https://github.com/cookpete/react-player/issues/1455#issuecomment-1207154843
+ */
+const ClientOnlyYouTubePlayer: React.FC<YouTubePlayerProps> = forwardRef<
+  YouTubePlayer,
+  YouTubePlayerProps
+>((props, ref) => (
+  <ClientOnly>
+    <YouTubePlayer ref={ref} {...props} />
+  </ClientOnly>
+));
+ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
 
 /**
  * A wrapper to make the player responsive. For more info, see the docs:
