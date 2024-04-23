@@ -112,6 +112,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
         <Slider
           id={playbackRateInputId}
+          aria-label="Playback Rate"
           value={[playbackRate]}
           // Note: YouTube videos seem to typically allow for 0.25x to 2x speed,
           // but that's not guaranteed. Ideally, we'd use the player's
