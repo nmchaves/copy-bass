@@ -195,11 +195,7 @@ ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
  * https://github.com/cookpete/react-player?tab=readme-ov-file#responsive-player
  */
 function ResponsivePlayerWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <div className={"relative pt-[56.25%] max-w-[640px] max-h-[360px] mx-auto"}>
-      {children}
-    </div>
-  );
+  return <div className={"relative pt-[56.25%] mx-auto"}>{children}</div>;
 }
 
 /**

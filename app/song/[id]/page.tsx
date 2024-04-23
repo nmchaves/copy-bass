@@ -70,7 +70,7 @@ function PlayersList({ song }: { song: SongMetadata }) {
   }
 
   return (
-    <ul>
+    <ul className="w-full max-w-[640px]">
       {urls.map((url) => (
         <li key={url} className="mt-10 first:mt-0">
           <Player url={url} />
