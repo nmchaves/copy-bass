@@ -4,10 +4,12 @@ import { forwardRef, useRef, useState } from "react";
 import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
 import { ClientOnly } from "@/components/ui/ClientOnly";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Slider } from "@/components/ui/Slider";
+import {
+  MinutesSecondsInputGroup,
+  useMinutesSeconds,
+} from "./MinutesSecondsInputGroup";
 
 export const Player: React.FC<{ url: string }> = ({ url }) => {
   const youTubePlayerRef = useRef<YouTubePlayer>(null);
@@ -29,13 +31,11 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   const [isPlayerReady, setIsPlayerReady] = useState(false);
 
+  // TODO: Use track duration to validate custom loop start/end
   const [trackDuration, setTrackDuration] = useState<number>();
 
-  const [customLoopStartSeconds, setCustomLoopStartSeconds] =
-    useState<number>();
-  const customLoopStartInputId = `customLoopStart-${url}`;
-  const [customLoopEndSeconds, setCustomLoopEndSeconds] = useState<number>();
-  const customLoopEndInputId = `customLoopEnd-${url}`;
+  const customLoopStartFields = useMinutesSeconds();
+  const customLoopEndFields = useMinutesSeconds();
 
   // When the user specifies a custom loop, the video should automatically play
   // at the start of the custom loop. However, the `seekTo` method doesn't do
@@ -44,7 +44,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
 
   const playStart = () => {
     if (youTubePlayerRef.current) {
-      youTubePlayerRef.current.seekTo(customLoopStartSeconds ?? 0);
+      youTubePlayerRef.current.seekTo(customLoopStartFields.totalSeconds ?? 0);
       setIsPlaying(true);
     }
   };
@@ -85,8 +85,8 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
           }}
           onProgress={({ playedSeconds }) => {
             if (
-              customLoopEndSeconds != null &&
-              playedSeconds >= customLoopEndSeconds
+              customLoopEndFields.totalSeconds != null &&
+              playedSeconds >= customLoopEndFields.totalSeconds
             ) {
               playStart();
             }
@@ -132,38 +132,15 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
         />
         <div className="mt-6 flex items-center justify-between gap-3">
           <div className="w-full">
-            <Label htmlFor={customLoopStartInputId} className="block mb-2">
-              Loop Start
-            </Label>
-            <Input
-              id={customLoopStartInputId}
-              placeholder="Start (in seconds)"
-              type="number"
-              min={0}
-              max={trackDuration}
-              value={customLoopStartSeconds?.toString() ?? ""}
-              onChange={(e) => {
-                const valStr = e.target.value;
-                setCustomLoopStartSeconds(valStr ? Number(valStr) : undefined);
-              }}
+            <MinutesSecondsInputGroup
+              {...customLoopStartFields}
+              label="Custom Loop Start"
             />
           </div>
-
           <div className="w-full">
-            <Label htmlFor={customLoopEndInputId} className="block mb-2">
-              Loop End
-            </Label>
-            <Input
-              id={customLoopEndInputId}
-              placeholder="End (in seconds)"
-              type="number"
-              min={0}
-              max={trackDuration}
-              value={customLoopEndSeconds?.toString() ?? ""}
-              onChange={(e) => {
-                const valStr = e.target.value;
-                setCustomLoopEndSeconds(valStr ? Number(valStr) : undefined);
-              }}
+            <MinutesSecondsInputGroup
+              {...customLoopEndFields}
+              label="Custom Loop End"
             />
           </div>
         </div>
