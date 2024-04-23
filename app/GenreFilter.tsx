@@ -7,6 +7,7 @@ import {
   MusicGenre,
   parseGenreFilter,
 } from "@/lib/genre";
+import { genreQueryKey } from "@/lib/songFilterRoutingConstants";
 import {
   Select,
   SelectContent,
@@ -14,9 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-
-const genreQueryKey = "genre";
-export type GenreQueryKey = typeof genreQueryKey;
 
 const allGenresSelectValue = "all";
 

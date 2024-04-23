@@ -1,10 +1,8 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
 import { Input } from "@/components/ui/Input";
-
-const searchQueryKey = "query";
-export type SearchQueryKey = typeof searchQueryKey;
 
 export const Search = () => {
   const searchParams = useSearchParams();
