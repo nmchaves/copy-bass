@@ -13,6 +13,21 @@ export interface BaseSongMetadata {
 
 export const songs: Array<BaseSongMetadata> = [
   {
+    id: "silly-love-songs-wings",
+    title: "Silly Love Songs",
+    artist: "Wings",
+    genre: MusicGenre.POP,
+    youTubeURLs: [
+      "https://www.youtube.com/watch?v=c_x16HC5PQQ",
+      "https://www.youtube.com/watch?v=akNCJaJLC-c",
+      "https://www.youtube.com/watch?v=TgdQx2mC6BQ",
+    ],
+    spotifyId: "3uiMBldZ07pW0ySHDX5gzE",
+    tuning: "Standard",
+    notes:
+      "Pay attention to the 👻 notes. Don't worry about being totally faithful to the original though. Paul McCartney plays around with the main riff each time. Just play by feel and have fun.",
+  },
+  {
     id: "september-ewf",
     title: "September",
     artist: "Earth, Wind & Fire",
