@@ -9,16 +9,21 @@ const AccessTokenResponseSchema = z.object({
 });
 
 async function fetchAccessToken() {
+  // See the Client Credentials example in Spotify's `web-api-examples` repo:
+  // https://github.com/spotify/web-api-examples/tree/master/authorization/client_credentials
   const res = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      client_id: serverEnv.SPOTIFY_CLIENT_ID,
-      client_secret: serverEnv.SPOTIFY_CLIENT_SECRET,
     }),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization:
+        "Basic " +
+        Buffer.from(
+          `${serverEnv.SPOTIFY_CLIENT_ID}:${serverEnv.SPOTIFY_CLIENT_SECRET}`,
+        ).toString("base64"),
+    },
   });
 
   const { access_token } = await res
