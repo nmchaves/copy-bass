@@ -29,10 +29,15 @@ export const SongCard: React.FC<{
           className="rounded shadow-md"
         />
         <div>
-          <p className="text-lg font-medium mb-1" aria-label="Song Title">
+          <p
+            className="text-lg font-medium mb-1 leading-snug"
+            aria-label="Song Title"
+          >
             {song.title}
           </p>
-          <p aria-label="Artist">{song.artist}</p>
+          <p className="leading-snug" aria-label="Artist">
+            {song.artist}
+          </p>
         </div>
       </div>
     </Link>
