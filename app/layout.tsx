@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Music Practice App",
-  description: "Nico's Music Practice App",
+  title: "Copy Bass",
+  description: "Nico's app for practicing bass guitar",
 };
 
 export default function RootLayout({
