@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { BaseSongMetadata } from "@/lib/songs";
+import { BaseSongMetadata, songs } from "@/lib/songs";
+import { zipWith } from "@/lib/utils";
 import { serverEnv } from "./serverEnv";
 
 const AccessTokenResponseSchema = z.object({
@@ -73,4 +74,34 @@ export async function fetchTracks(
     .then((data) => TracksResponseSchema.parse(data));
 
   return tracks;
+}
+
+export interface SongWithSpotifyMetadata extends BaseSongMetadata {
+  spotify: SpotifySongMetadata;
+}
+
+interface SpotifySongMetadata {
+  albumImgUrl: string;
+}
+
+export async function enrichAllSongsWithSpotifyMetadata(): Promise<
+  Array<SongWithSpotifyMetadata>
+> {
+  const spotifyTracks = await fetchTracks(songs);
+
+  const songsWithSpotifyMeta = zipWith(
+    songs,
+    spotifyTracks,
+    (song, spotifyTrack): SongWithSpotifyMetadata => {
+      const { images } = spotifyTrack.album;
+      // TODO: fallback image
+      const albumImgUrl = images.length > 0 ? images[0].url : "";
+      return {
+        ...song,
+        spotify: { albumImgUrl },
+      };
+    },
+  );
+
+  return songsWithSpotifyMeta;
 }

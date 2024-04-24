@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SongMetadata, songs } from "@/lib/songs";
+import { BaseSongMetadata, songs } from "@/lib/songs";
 import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
 import { Button } from "@/components/ui/Button";
 import { H1 } from "@/components/ui/Heading";
@@ -72,7 +72,7 @@ export default function Page({ params }: Props) {
   );
 }
 
-function PlayersList({ song }: { song: SongMetadata }) {
+function PlayersList({ song }: { song: BaseSongMetadata }) {
   const urls = song.youTubeURLs;
 
   if (urls.length === 0) {

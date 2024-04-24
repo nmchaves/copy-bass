@@ -1,6 +1,6 @@
 import { MusicGenre } from "./genre";
 
-export interface SongMetadata {
+export interface BaseSongMetadata {
   id: string;
   title: string;
   artist: string;
@@ -11,7 +11,7 @@ export interface SongMetadata {
   notes: string | undefined;
 }
 
-export const songs: Array<SongMetadata> = [
+export const songs: Array<BaseSongMetadata> = [
   {
     id: "september-ewf",
     title: "September",

@@ -1,9 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
-import { SongMetadata } from "@/lib/songs";
 import { genreEmojiDict, genreLabelDict } from "@/lib/genre";
+import type { SongWithSpotifyMetadata } from "@/server/spotify";
 
 export const SongCard: React.FC<{
-  song: SongMetadata;
+  song: SongWithSpotifyMetadata;
   displayGenreIcon: boolean;
 }> = ({ song, displayGenreIcon }) => {
   return (
@@ -19,10 +20,21 @@ export const SongCard: React.FC<{
           {genreEmojiDict[song.genre]}
         </span>
       )}
-      <p className="text-lg font-medium mb-1" aria-label="Song Title">
-        {song.title}
-      </p>
-      <p aria-label="Artist">{song.artist}</p>
+      <div className="flex items-start gap-2.5">
+        <Image
+          alt={`Album cover for ${song.title}`}
+          height={60}
+          width={60}
+          src={song.spotify.albumImgUrl}
+          className="rounded shadow-md"
+        />
+        <div>
+          <p className="text-lg font-medium mb-1" aria-label="Song Title">
+            {song.title}
+          </p>
+          <p aria-label="Artist">{song.artist}</p>
+        </div>
+      </div>
     </Link>
   );
 };

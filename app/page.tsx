@@ -1,5 +1,8 @@
-import { SongMetadata, songs } from "@/lib/songs";
 import { MusicGenre, parseGenreFilter } from "@/lib/genre";
+import {
+  SongWithSpotifyMetadata,
+  enrichAllSongsWithSpotifyMetadata,
+} from "@/server/spotify";
 import {
   GenreQueryKey,
   SearchQueryKey,
@@ -9,16 +12,18 @@ import { SongCard } from "./SongCard";
 import { GenreFilter } from "./GenreFilter";
 import { Search } from "./Search";
 
-export default function Home({
+export default async function Home({
   searchParams,
 }: {
   searchParams?: Partial<Record<SearchQueryKey | GenreQueryKey, string>>;
 }) {
+  const allSongs = await enrichAllSongsWithSpotifyMetadata();
+
   const searchQuery = searchParams?.query;
   const genreFilter = parseGenreFilter(searchParams?.genre);
 
   const filteredSongs = filterSongs({
-    allSongs: songs,
+    allSongs,
     searchQuery,
     genreFilter,
   });
@@ -43,11 +48,11 @@ function SongsGrid({
   filteredSongs,
   genreFilter,
 }: {
-  filteredSongs: Array<SongMetadata>;
+  filteredSongs: Array<SongWithSpotifyMetadata>;
   genreFilter: string | undefined;
 }) {
   return (
-    <div className="max-w-6xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="max-w-7xl grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {filteredSongs.map((song) => (
         <div key={song.title} className="m-4">
           <SongCard
@@ -71,7 +76,7 @@ function filterSongs({
   searchQuery,
   genreFilter,
 }: {
-  allSongs: Array<SongMetadata>;
+  allSongs: Array<SongWithSpotifyMetadata>;
   searchQuery: string | undefined;
   genreFilter: MusicGenre | undefined;
 }) {
@@ -79,7 +84,7 @@ function filterSongs({
 
   if (searchQuery) {
     const lowerSearchQuery = searchQuery.toLowerCase();
-    filteredSongs = songs.filter(
+    filteredSongs = filteredSongs.filter(
       (song) =>
         song.title.toLowerCase().includes(lowerSearchQuery) ||
         song.artist.toLowerCase().includes(lowerSearchQuery),
