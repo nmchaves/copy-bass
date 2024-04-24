@@ -30,7 +30,8 @@ export default async function Home({
 
   return (
     <main className="flex flex-col items-center">
-      <H1 className="mb-8 text-center">Nico&apos;s Practice Songs 🎸</H1>
+      <H1 className="mb-2 text-center">Ctrl+C Bass</H1>
+      <p className="mb-8 text-md text-center">{`Time to "copy and bass" some of Nico's favorite songs 🎸`}</p>
       <div className="mb-4 flex items-center">
         <Search />
         <GenreFilter />
