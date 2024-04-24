@@ -152,6 +152,19 @@ export const songs: Array<BaseSongMetadata> = [
     notes: undefined,
   },
   {
+    id: "time-bomb-iration",
+    title: "Time Bomb",
+    artist: "Iration",
+    genre: MusicGenre.REGGAE_ROCK,
+    youTubeURLs: [
+      "https://www.youtube.com/watch?v=92SzQ25UhOU",
+      "https://www.youtube.com/watch?v=zRwXPkP1kBA",
+    ],
+    spotifyId: "0KtKac3tvjeGjg6FXcUy7X",
+    tuning: "Standard",
+    notes: undefined,
+  },
+  {
     id: "operation-mindcrime-queensryche",
     title: "Operation Mindcrime",
     artist: "Queensrÿche",
