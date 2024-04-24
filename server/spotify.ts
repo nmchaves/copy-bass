@@ -78,7 +78,7 @@ export async function fetchTracks(
 }
 
 export interface SongWithSpotifyMetadata extends BaseSongMetadata {
-  spotify: SpotifySongMetadata;
+  spotify?: SpotifySongMetadata;
 }
 
 interface SpotifySongMetadata {
@@ -88,21 +88,25 @@ interface SpotifySongMetadata {
 export async function enrichAllSongsWithSpotifyMetadata(): Promise<
   Array<SongWithSpotifyMetadata>
 > {
-  const spotifyTracks = await fetchTracks(songs);
+  try {
+    const spotifyTracks = await fetchTracks(songs);
 
-  const songsWithSpotifyMeta = zipWith(
-    songs,
-    spotifyTracks,
-    (song, spotifyTrack): SongWithSpotifyMetadata => {
-      const { images } = spotifyTrack.album;
-      // TODO: fallback image
-      const albumImgUrl = images.length > 0 ? images[0].url : "";
-      return {
-        ...song,
-        spotify: { albumImgUrl },
-      };
-    },
-  );
+    const songsWithSpotifyMeta = zipWith(
+      songs,
+      spotifyTracks,
+      (song, spotifyTrack): SongWithSpotifyMetadata => {
+        const { images } = spotifyTrack.album;
+        // TODO: fallback image
+        const albumImgUrl = images.length > 0 ? images[0].url : "";
+        return {
+          ...song,
+          spotify: { albumImgUrl },
+        };
+      },
+    );
 
-  return songsWithSpotifyMeta;
+    return songsWithSpotifyMeta;
+  } catch (e) {
+    return songs;
+  }
 }

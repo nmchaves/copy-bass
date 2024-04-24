@@ -21,13 +21,15 @@ export const SongCard: React.FC<{
         </span>
       )}
       <div className="flex items-start gap-2.5">
-        <Image
-          alt={`Album cover for ${song.title}`}
-          height={60}
-          width={60}
-          src={song.spotify.albumImgUrl}
-          className="rounded shadow-md"
-        />
+        {song.spotify && (
+          <Image
+            alt={`Album cover for ${song.title}`}
+            height={60}
+            width={60}
+            src={song.spotify.albumImgUrl}
+            className="rounded shadow-md"
+          />
+        )}
         <div>
           <p
             className="text-lg font-medium mb-1 leading-snug"
