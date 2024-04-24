@@ -1,3 +1,4 @@
+import "server-only";
 import { z } from "zod";
 import { BaseSongMetadata, songs } from "@/lib/songs";
 import { zipWith } from "@/lib/utils";
