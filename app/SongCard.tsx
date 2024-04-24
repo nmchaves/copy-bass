@@ -9,7 +9,7 @@ export const SongCard: React.FC<{
   return (
     <Link
       href={`/song/${song.id}`}
-      className="block relative p-6 transition hover:scale-105 border border-slate-300 hover:border-slate-400 rounded-xl bg-slate-50 hover:bg-slate-200"
+      className="block relative p-6 transition hover:scale-105 border border-slate-300 hover:border-slate-400 rounded-xl bg-slate-50 hover:bg-slate-200 shadow-lg hover:shadow-xl"
     >
       {displayGenreIcon && (
         <span
