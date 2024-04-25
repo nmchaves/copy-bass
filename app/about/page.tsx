@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { H1 } from "@/components/ui/Heading";
 
 export const metadata: Metadata = {
@@ -46,7 +47,20 @@ export default function Page() {
             specific section of a song
           </li>
         </ul>
-        <p>{`Bass'd on that wishlist, I made this site!`}</p>
+        <p className="mb-6">{`Bass'd on that wishlist, I made this site!`}</p>
+        <p>
+          The favicon is based on a{" "}
+          <Link
+            href="https://www.flaticon.com/free-icon/bass-guitar_4280672"
+            rel="noopener noreferrer"
+            target="_blank"
+            className="underline underline-offset-4 hover:decoration-2"
+          >
+            Flaticon image
+          </Link>
+          ...but of course, I <em>had</em> to rotate it since I&apos;m
+          left-handed.
+        </p>
       </div>
     </main>
   );
