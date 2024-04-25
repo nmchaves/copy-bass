@@ -34,12 +34,11 @@ export default function Page() {
           <li>List all of the songs I want to practice in 1 place</li>
           <li>Show notes/tips about how to play each song, including tuning</li>
           <li>
-            Embed YouTube videos of covers, live performances, isolated tracks,
-            etc. for each song
+            Embed videos of covers, live performances, isolated tracks, etc.
           </li>
           <li>
             Allow me to easily adjust the playback rate. YouTube already lets
-            you adjust the playback rate, but I wanted something with fewer
+            users adjust the playback rate, but I wanted something with fewer
             clicks
           </li>
           <li>
@@ -47,7 +46,10 @@ export default function Page() {
             specific section of a song
           </li>
         </ul>
-        <p className="mb-6">{`Bass'd on that wishlist, I made this site!`}</p>
+        <p className="mb-6">
+          <span className="font-bold">Bass</span>&apos;d on that wishlist, I
+          made this site!
+        </p>
         <p>
           The favicon is based on a{" "}
           <Link
