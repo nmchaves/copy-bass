@@ -57,7 +57,7 @@ export default function Page({ params }: Props) {
           {song.artist}
         </Link>
       </PageHeading>
-      <div className="mb-12 min-w-72 max-w-md p-4 border border-cyan-950 rounded">
+      <div className="mb-12 min-w-72 max-w-xl p-4 border border-cyan-950 rounded">
         <div className="mb-1 font-semibold">Tuning</div>
         <div>{song.tuning}</div>
         {song.notes && (
