@@ -36,7 +36,7 @@ function ExternalResourceLink({
       href={href}
       rel="noopener noreferrer"
       target="_blank"
-      className="mb-6 underline underline-offset-4 hover:decoration-2"
+      className="mb-6 text-center underline underline-offset-4 hover:decoration-2"
     >
       {children}
     </Link>
