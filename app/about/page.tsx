@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageHeading } from "@/components/ui/PageHeading";
+import realBass from "@/public/real_bass.jpeg";
 
 export const metadata: Metadata = {
   title: "About Copy Bass",
@@ -19,7 +20,7 @@ export default function Page() {
           kind <span className="text-xl">😜</span>
         </p>
         <Image
-          src="/real_bass.jpeg"
+          src={realBass}
           alt="An accurate meme explaining that bass guitars are real bass"
           width={300}
           height={300}
