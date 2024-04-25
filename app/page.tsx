@@ -34,7 +34,7 @@ export default async function Home({
       <H1 className="mb-2 text-center">Ctrl+C Bass</H1>
       <p className="mb-8 text-md text-center">
         {`Time to "copy and bass" some of Nico's favorite songs `}
-        <LeftyGuitarEmoji />
+        <LeftyGuitarEmoji className="text-2xl" />
       </p>
       <div className="mb-4 flex items-center">
         <Search />
