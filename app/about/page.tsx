@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { H1 } from "@/components/ui/Heading";
+import { PageHeading } from "@/components/ui/PageHeading";
 
 export const metadata: Metadata = {
   title: "About Copy Bass",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex flex-col items-center">
-      <H1 className="mb-8 text-center">About This Site</H1>
+      <PageHeading className="mb-8">About This Site</PageHeading>
       <div className="max-w-2xl flex flex-col items-center">
         <p className="mb-6">
           I love music, especially songs with plenty of bass...the <em>real</em>{" "}

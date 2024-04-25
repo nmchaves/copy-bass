@@ -7,7 +7,7 @@ import {
   GenreQueryKey,
   SearchQueryKey,
 } from "@/lib/songFilterRoutingConstants";
-import { H1 } from "@/components/ui/Heading";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { LeftyGuitarEmoji } from "@/components/ui/LeftyGuitarEmoji";
 import { SongCard } from "./SongCard";
 import { GenreFilter } from "./GenreFilter";
@@ -31,7 +31,7 @@ export default async function Home({
 
   return (
     <main className="flex flex-col items-center">
-      <H1 className="mb-2 text-center">Ctrl+C Bass</H1>
+      <PageHeading className="mb-2">Ctrl+C Bass</PageHeading>
       <p className="mb-12 text-md text-center">
         {`Time to "copy and bass" some of Nico's favorite songs `}
         <LeftyGuitarEmoji className="text-2xl" />

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BaseSongMetadata, songs } from "@/lib/songs";
 import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
 import { Button } from "@/components/ui/Button";
-import { H1 } from "@/components/ui/Heading";
+import { PageHeading } from "@/components/ui/PageHeading";
 import { Player } from "./Player";
 
 const findSongById = (id: string) => songs.find((song) => song.id === id);
@@ -48,7 +48,7 @@ export default function Page({ params }: Props) {
       <Link href="/" className="self-start">
         <Button variant="link">&larr; All Songs</Button>
       </Link>
-      <H1 className="mt-4 mb-10 text-center">
+      <PageHeading className="mt-4 mb-10">
         {song.title} by{" "}
         <Link
           href={`/?${artistSearchParams.toString()}`}
@@ -56,7 +56,7 @@ export default function Page({ params }: Props) {
         >
           {song.artist}
         </Link>
-      </H1>
+      </PageHeading>
       <div className="mb-12 min-w-72 max-w-md p-4 border border-cyan-950 rounded">
         <div className="mb-1 font-semibold">Tuning</div>
         <div>{song.tuning}</div>

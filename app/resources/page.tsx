@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { H1 } from "@/components/ui/Heading";
+import { PageHeading } from "@/components/ui/PageHeading";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex flex-col items-center">
-      <H1 className="mb-8 text-center">Resources</H1>
+      <PageHeading className="mb-8">Resources</PageHeading>
       <ExternalResourceLink href="https://www.youtube.com/playlist?list=PLHNte-PbVjgXrkBxoMC4xQMqlJ0RNZq5E">
         Steve Harris Tech 21 Signature Amp Settings
       </ExternalResourceLink>
