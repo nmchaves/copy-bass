@@ -83,7 +83,7 @@ export async function fetchTracks(
 }
 
 export interface SongWithSpotifyMetadata extends BaseSongMetadata {
-  spotify?: SpotifySongMetadata;
+  spotify: SpotifySongMetadata | undefined;
 }
 
 interface SpotifySongMetadata {
@@ -112,6 +112,6 @@ export async function enrichAllSongsWithSpotifyMetadata(): Promise<
 
     return songsWithSpotifyMeta;
   } catch (e) {
-    return songs;
+    return songs.map((song) => ({ ...song, spotify: undefined }));
   }
 }
