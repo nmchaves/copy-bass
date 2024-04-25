@@ -72,18 +72,20 @@ export default function Page({ params }: Props) {
   );
 }
 
-function PlayersList({ song }: { song: BaseSongMetadata }) {
-  const urls = song.youTubeURLs;
-
-  if (urls.length === 0) {
-    return <div>This song doesn&apos;t have any YouTube URLs yet.</div>;
+function PlayersList({ song: { youTubeIds } }: { song: BaseSongMetadata }) {
+  if (youTubeIds.length === 0) {
+    return (
+      <div>
+        This song doesn&apos;t have any YouTube videos associated with it yet.
+      </div>
+    );
   }
 
   return (
     <ul className="w-full max-w-[1120px]">
-      {urls.map((url) => (
-        <li key={url} className="mt-10 first:mt-0">
-          <Player url={url} />
+      {youTubeIds.map((id) => (
+        <li key={id} className="mt-10 first:mt-0">
+          <Player url={`https://www.youtube.com/watch?v=${id}`} />
         </li>
       ))}
     </ul>
