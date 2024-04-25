@@ -87,7 +87,7 @@ export interface SongWithSpotifyMetadata extends BaseSongMetadata {
 }
 
 interface SpotifySongMetadata {
-  albumImgUrl: string;
+  albumImgUrl: string | undefined;
 }
 
 export async function enrichAllSongsWithSpotifyMetadata(): Promise<
@@ -101,8 +101,7 @@ export async function enrichAllSongsWithSpotifyMetadata(): Promise<
       spotifyTracks,
       (song, spotifyTrack): SongWithSpotifyMetadata => {
         const { images } = spotifyTrack.album;
-        // TODO: fallback image
-        const albumImgUrl = images.length > 0 ? images[0].url : "";
+        const albumImgUrl = images.length > 0 ? images[0].url : undefined;
         return {
           ...song,
           spotify: { albumImgUrl },

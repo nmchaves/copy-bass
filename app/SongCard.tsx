@@ -21,7 +21,7 @@ export const SongCard: React.FC<{
         </span>
       )}
       <div className="flex items-start gap-2.5">
-        {song.spotify && (
+        {song.spotify?.albumImgUrl && (
           <Image
             alt={`Album cover for ${song.title}`}
             height={60}
