@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PageHeading } from "@/components/ui/PageHeading";
-import realBass from "@/public/real_bass.jpeg";
+import realBass from "@/public/real_bass.jpg";
 
 export const metadata: Metadata = {
   title: "About Copy Bass",
