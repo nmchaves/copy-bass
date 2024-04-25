@@ -1,17 +1,18 @@
 import { MusicGenre } from "./genre";
+import { NonEmptyArray } from "./types";
 
 export interface BaseSongMetadata {
   id: string;
   title: string;
   artist: string;
   genre: MusicGenre;
-  youTubeURLs: Array<string>;
+  youTubeURLs: NonEmptyArray<string>;
   spotifyId: string;
   tuning: string;
   notes: string | undefined;
 }
 
-export const songs: Array<BaseSongMetadata> = [
+export const songs: NonEmptyArray<BaseSongMetadata> = [
   {
     id: "silly-love-songs-wings",
     title: "Silly Love Songs",
