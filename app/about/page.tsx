@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import { H1 } from "@/components/ui/Heading";
 
 export const metadata: Metadata = {
-  title: "About Nico's Music Site",
-  description: "Info about why I built this site to help me practice",
+  title: "About Copy Bass",
+  description:
+    "Info about why I built this site to help me practice bass guitar",
 };
 
 export default function Page() {
