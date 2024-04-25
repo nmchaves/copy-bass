@@ -14,6 +14,13 @@ export const Header = () => {
         <Link href="/about">
           <Button variant="link">About</Button>
         </Link>
+        <Link
+          href="https://github.com/nmchaves/copy-bass"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button variant="link">GitHub Repo</Button>
+        </Link>
       </nav>
     </header>
   );
