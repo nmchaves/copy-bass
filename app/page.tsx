@@ -31,9 +31,9 @@ export default async function Home({
 
   return (
     <main className="flex flex-col items-center">
-      <PageHeading className="mb-2">Ctrl+C Bass</PageHeading>
+      <PageHeading className="mb-2">Copy Bass</PageHeading>
       <p className="mb-12 text-md text-center">
-        {`Time to "copy and bass" some of Nico's favorite songs `}
+        {`Time to "Ctrl+C and bass" some of Nico's favorite songs `}
         <LeftyGuitarEmoji className="text-2xl" />
       </p>
       <div className="mb-4 flex items-center">
