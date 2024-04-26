@@ -6,9 +6,14 @@ import { Button } from "@/components/ui/Button";
 export const Header = () => {
   return (
     <header className="pt-8 pb-12">
-      <nav className="flex items-center">
+      <nav className="flex items-center justify-center md:justify-normal">
         <Link href="/">
-          <Image src={logo} height={40} alt="Copy Bass" className="mr-12" />
+          <Image
+            src={logo}
+            height={40}
+            alt="Copy Bass"
+            className="mr-12 hidden md:block"
+          />
         </Link>
         <Link href="/">
           <Button variant="link">Songs</Button>
