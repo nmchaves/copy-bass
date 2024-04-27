@@ -3,6 +3,7 @@
 import { forwardRef, useRef, useState } from "react";
 import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/Button";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Slider } from "@/components/ui/Slider";
@@ -47,6 +48,13 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
       youTubePlayerRef.current.seekTo(customLoopStartFields.totalSeconds ?? 0);
       setIsPlaying(true);
     }
+  };
+
+  const clearCustomLoop = () => {
+    customLoopStartFields.setMinutes(undefined);
+    customLoopStartFields.setSeconds(undefined);
+    customLoopEndFields.setMinutes(undefined);
+    customLoopEndFields.setSeconds(undefined);
   };
 
   return (
@@ -145,6 +153,14 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
             />
           </div>
         </div>
+        <Button
+          className="mt-2"
+          size="sm"
+          variant="secondary"
+          onClick={() => clearCustomLoop()}
+        >
+          Clear Loop
+        </Button>
       </div>
     </>
   );
