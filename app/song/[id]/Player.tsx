@@ -345,7 +345,7 @@ function Bookmark({ section, onClick }: BookmarkProps) {
       variant="link"
       // shadcn-ui uses a fixed height for buttons. But I want these buttons to
       // be a little bit shorter.
-      className="px-0 py-1.5 h-auto"
+      className="px-0 py-1.5 h-auto block truncate max-w-full"
       size="sm"
       onClick={() => onClick()}
     >
