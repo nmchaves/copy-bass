@@ -3,6 +3,7 @@
 import { forwardRef, useRef, useState } from "react";
 import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { cn } from "@/lib/utils";
+import { secondsFromMinutes } from "@/lib/time";
 import { Button } from "@/components/ui/Button";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -43,11 +44,29 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
   // that. So we need to manage the playing state manually.
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const playStart = () => {
+  const playAt = ({
+    minutes,
+    seconds,
+  }: {
+    minutes: number;
+    seconds: number;
+  }) => {
     if (youTubePlayerRef.current) {
-      youTubePlayerRef.current.seekTo(customLoopStartFields.totalSeconds ?? 0);
+      const totalSeconds = secondsFromMinutes(minutes) + seconds;
+      youTubePlayerRef.current.seekTo(totalSeconds);
       setIsPlaying(true);
     }
+  };
+
+  const playStart = () => {
+    playAt({ minutes: 0, seconds: 0 });
+  };
+
+  const playCustomLoop = () => {
+    playAt({
+      minutes: customLoopStartFields.minutes ?? 0,
+      seconds: customLoopStartFields.seconds ?? 0,
+    });
   };
 
   const clearCustomLoop = () => {
@@ -94,7 +113,7 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
               customLoopEndFields.totalSeconds != null &&
               playedSeconds >= customLoopEndFields.totalSeconds
             ) {
-              playStart();
+              playCustomLoop();
             }
           }}
           // Use `onEnded` instead of `loop` so we can account for custom loops.
