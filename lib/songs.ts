@@ -37,7 +37,21 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     artist: "Wings",
     genre: MusicGenre.POP,
     youTubeVideos: [
-      { id: "c_x16HC5PQQ" },
+      {
+        id: "c_x16HC5PQQ",
+        bookmarkedSections: [
+          {
+            label: "Bridge (Love doesn't come in a minute)",
+            start: { minutes: 2, seconds: 18 },
+            end: { minutes: 2, seconds: 40 },
+          },
+          {
+            label: "Bridge 2 (How can I tell you about my loved one?)",
+            start: { minutes: 3, seconds: 9 },
+            end: { minutes: 3, seconds: 42 },
+          },
+        ],
+      },
       { id: "akNCJaJLC-c" },
       { id: "TgdQx2mC6BQ" },
     ],
@@ -70,9 +84,14 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
         id: "WjKKD6yXlVc",
         bookmarkedSections: [
           {
+            label: "Intro",
+            start: { minutes: 0, seconds: 14 },
+            end: { minutes: 2, seconds: 20 },
+          },
+          {
             label: "Pre-outro riff",
             start: { minutes: 8, seconds: 49 },
-            end: { minutes: 9, seconds: 16 },
+            end: { minutes: 9, seconds: 20 },
           },
         ],
       },
