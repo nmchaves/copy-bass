@@ -170,14 +170,23 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
             />
           </div>
         </div>
-        <Button
-          className="mt-2"
-          size="sm"
-          variant="secondary"
-          onClick={() => clearCustomLoop()}
-        >
-          Clear Loop
-        </Button>
+        <div className="mt-2 flex items-center">
+          <Button
+            className="mr-2"
+            size="sm"
+            variant="secondary"
+            onClick={() => playCustomLoop()}
+          >
+            Go
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => clearCustomLoop()}
+          >
+            Clear
+          </Button>
+        </div>
       </div>
     </>
   );
