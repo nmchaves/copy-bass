@@ -6,10 +6,28 @@ export interface BaseSongMetadata {
   title: string;
   artist: string;
   genre: MusicGenre;
-  youTubeIds: NonEmptyArray<string>;
+  youTubeVideos: NonEmptyArray<YouTubeVideoMetadata>;
   spotifyId: string;
   tuning: string;
   notes: string | undefined;
+}
+
+interface YouTubeVideoMetadata {
+  id: YouTubeVideoID;
+  bookmarkedSections?: NonEmptyArray<SongSection>;
+}
+
+type YouTubeVideoID = string;
+
+interface SongSection {
+  label: string;
+  start: MinutesSeconds;
+  end: MinutesSeconds;
+}
+
+interface MinutesSeconds {
+  minutes: number;
+  seconds: number;
 }
 
 export const songs: NonEmptyArray<BaseSongMetadata> = [
@@ -18,7 +36,11 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Silly Love Songs",
     artist: "Wings",
     genre: MusicGenre.POP,
-    youTubeIds: ["c_x16HC5PQQ", "akNCJaJLC-c", "TgdQx2mC6BQ"],
+    youTubeVideos: [
+      { id: "c_x16HC5PQQ" },
+      { id: "akNCJaJLC-c" },
+      { id: "TgdQx2mC6BQ" },
+    ],
     spotifyId: "3uiMBldZ07pW0ySHDX5gzE",
     tuning: "Standard",
     notes:
@@ -29,7 +51,11 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "September",
     artist: "Earth, Wind & Fire",
     genre: MusicGenre.RB_SOUL,
-    youTubeIds: ["gMXBHlYR_R8", "L_5YGzulQHY", "Gs069dndIYk"],
+    youTubeVideos: [
+      { id: "gMXBHlYR_R8" },
+      { id: "L_5YGzulQHY" },
+      { id: "Gs069dndIYk" },
+    ],
     spotifyId: "3kXoKlD84c6OmIcOLfrfEs",
     tuning: "Standard",
     notes: `The little "hiccup" around 0:15 is not a mistake. He's syncopating to be more groooovin.`,
@@ -39,7 +65,19 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "When the Wild Wind Blows",
     artist: "Iron Maiden",
     genre: MusicGenre.METAL,
-    youTubeIds: ["WjKKD6yXlVc", "BiR5hEqsijU"],
+    youTubeVideos: [
+      {
+        id: "WjKKD6yXlVc",
+        bookmarkedSections: [
+          {
+            label: "Pre-outro riff",
+            start: { minutes: 8, seconds: 49 },
+            end: { minutes: 9, seconds: 16 },
+          },
+        ],
+      },
+      { id: "BiR5hEqsijU" },
+    ],
     spotifyId: "46tXExmproacf75cfuS9Ui",
     tuning: "Standard",
     notes: undefined,
@@ -49,7 +87,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Everybody Wants To Rule The World",
     artist: "Tears for Fears",
     genre: MusicGenre.EIGHTIES,
-    youTubeIds: ["Y97qdhenzAU"],
+    youTubeVideos: [{ id: "Y97qdhenzAU" }],
     spotifyId: "4RvWPyQ5RL0ao9LPZeSouE",
     tuning: "Drop D (A=450)",
     notes: "The actual track uses a synth bass. But bass guitar is betta",
@@ -59,7 +97,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Is This Love",
     artist: "Bob Marley & The Wailers",
     genre: MusicGenre.REGGAE,
-    youTubeIds: ["f3sEBPv1Vw8"],
+    youTubeVideos: [{ id: "f3sEBPv1Vw8" }],
     spotifyId: "6JRLFiX9NJSoRRKxowlBYr",
     tuning: "Standard",
     notes: undefined,
@@ -69,7 +107,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Take on Me",
     artist: "a-ha",
     genre: MusicGenre.EIGHTIES,
-    youTubeIds: ["HWPBF4gKbWw"],
+    youTubeVideos: [{ id: "HWPBF4gKbWw" }],
     spotifyId: "2WfaOiMkCvy7F5fcp2zZ8L",
     tuning: "Standard",
     notes: undefined,
@@ -79,7 +117,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Africa",
     artist: "TOTO",
     genre: MusicGenre.EIGHTIES,
-    youTubeIds: ["G_gSS7QTCM8"],
+    youTubeVideos: [{ id: "G_gSS7QTCM8" }],
     spotifyId: "2374M0fQpWi3dLnB54qaLX",
     tuning: "Standard",
     notes: undefined,
@@ -89,7 +127,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Walking On The Moon",
     artist: "The Police",
     genre: MusicGenre.EIGHTIES,
-    youTubeIds: ["sEGdFApfWdg"],
+    youTubeVideos: [{ id: "sEGdFApfWdg" }],
     spotifyId: "62uLNJgVZaFiEiKV4LpoYJ",
     tuning: "Standard",
     notes: undefined,
@@ -99,7 +137,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "I'll Be Around",
     artist: "The Spinners",
     genre: MusicGenre.RB_SOUL,
-    youTubeIds: ["Wij9l_erYFQ"],
+    youTubeVideos: [{ id: "Wij9l_erYFQ" }],
     spotifyId: "2vLaES21zwbX1Rnmj56Bbb",
     tuning: "Standard",
     notes: undefined,
@@ -109,7 +147,11 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "The Clairvoyant",
     artist: "Iron Maiden",
     genre: MusicGenre.METAL,
-    youTubeIds: ["0vLeWKQumFQ", "s5Q_rbs9ul8", "8U493_zUyoE"],
+    youTubeVideos: [
+      { id: "0vLeWKQumFQ" },
+      { id: "s5Q_rbs9ul8" },
+      { id: "8U493_zUyoE" },
+    ],
     spotifyId: "159u1fW3HR7S8j8JsR40co",
     tuning: "Standard",
     notes: undefined,
@@ -119,7 +161,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Ritual",
     artist: "Ghost",
     genre: MusicGenre.METAL,
-    youTubeIds: ["JE9Btb59qIg"],
+    youTubeVideos: [{ id: "JE9Btb59qIg" }],
     spotifyId: "5ZiTzbMB53mIiP3I4uQCmt",
     tuning: "Tune down to D Standard (D G C F)",
     notes: undefined,
@@ -129,7 +171,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Paschendale",
     artist: "Iron Maiden",
     genre: MusicGenre.METAL,
-    youTubeIds: ["Pc_jXFYXmNc", "-YByK_mMWTc"],
+    youTubeVideos: [{ id: "Pc_jXFYXmNc" }, { id: "-YByK_mMWTc" }],
     spotifyId: "5q1KIAfUebf0L7TvFj47Rk",
     tuning: "Standard",
     notes: undefined,
@@ -139,7 +181,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Time Bomb",
     artist: "Iration",
     genre: MusicGenre.REGGAE_ROCK,
-    youTubeIds: ["92SzQ25UhOU", "zRwXPkP1kBA"],
+    youTubeVideos: [{ id: "92SzQ25UhOU" }, { id: "zRwXPkP1kBA" }],
     spotifyId: "0KtKac3tvjeGjg6FXcUy7X",
     tuning: "Standard",
     notes: undefined,
@@ -149,7 +191,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Operation Mindcrime",
     artist: "Queensrÿche",
     genre: MusicGenre.METAL,
-    youTubeIds: ["Yioq00xExKo"],
+    youTubeVideos: [{ id: "Yioq00xExKo" }],
     spotifyId: "3UD6pyEQwqp2YcfSNvmsoT",
     tuning: "Standard",
     notes: undefined,
@@ -159,7 +201,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Dance of Death",
     artist: "Iron Maiden",
     genre: MusicGenre.METAL,
-    youTubeIds: ["GoBok1xd93M", "bfymCqid0IM"],
+    youTubeVideos: [{ id: "GoBok1xd93M" }, { id: "bfymCqid0IM" }],
     spotifyId: "1qadSe0Zf8005ULpuaDJIm",
     tuning: "Standard",
     notes: undefined,
@@ -169,7 +211,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Your Love",
     artist: "The Outfield",
     genre: MusicGenre.EIGHTIES,
-    youTubeIds: ["qUlvHqPevEI"],
+    youTubeVideos: [{ id: "qUlvHqPevEI" }],
     spotifyId: "0WoFs3EdGOx58yX5BtXvOa",
     tuning: "Standard",
     notes: undefined,
@@ -179,7 +221,7 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     title: "Journeyman",
     artist: "Iron Maiden",
     genre: MusicGenre.METAL,
-    youTubeIds: ["lxHz3wuNUpM", "dntNsPCsAxo"],
+    youTubeVideos: [{ id: "lxHz3wuNUpM" }, { id: "dntNsPCsAxo" }],
     spotifyId: "01a2OOkjoDL4Ghgs0npe3K",
     tuning: "Standard",
     notes:

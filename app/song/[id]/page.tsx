@@ -72,8 +72,8 @@ export default function Page({ params }: Props) {
   );
 }
 
-function PlayersList({ song: { youTubeIds } }: { song: BaseSongMetadata }) {
-  if (youTubeIds.length === 0) {
+function PlayersList({ song: { youTubeVideos } }: { song: BaseSongMetadata }) {
+  if (youTubeVideos.length === 0) {
     return (
       <div>
         This song doesn&apos;t have any YouTube videos associated with it yet.
@@ -83,7 +83,7 @@ function PlayersList({ song: { youTubeIds } }: { song: BaseSongMetadata }) {
 
   return (
     <ul className="w-full max-w-[1120px]">
-      {youTubeIds.map((id) => (
+      {youTubeVideos.map(({ id }) => (
         <li key={id} className="mt-10 first:mt-0">
           <Player url={`https://www.youtube.com/watch?v=${id}`} />
         </li>
