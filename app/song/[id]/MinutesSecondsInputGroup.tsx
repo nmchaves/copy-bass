@@ -51,6 +51,10 @@ export const MinutesSecondsInputGroup: React.FC<
 
 interface UseMinutesSecondsResult
   extends Omit<MinutesSecondsInputGroupProps, "label"> {
+  setTime: (time: {
+    minutes: number | undefined;
+    seconds: number | undefined;
+  }) => void;
   /**
    * The total number of seconds. For example, if `minutes` is 1 and `seconds`
    * is 30, then `totalSeconds` will be 90.
@@ -67,6 +71,10 @@ export const useMinutesSeconds = (): UseMinutesSecondsResult => {
     setMinutes,
     seconds,
     setSeconds,
+    setTime: ({ minutes, seconds }) => {
+      setMinutes(minutes);
+      setSeconds(seconds);
+    },
     totalSeconds: getTotalSeconds({ minutes, seconds }),
   };
 };

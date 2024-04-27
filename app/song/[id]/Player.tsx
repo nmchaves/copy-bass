@@ -51,10 +51,8 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
   };
 
   const clearCustomLoop = () => {
-    customLoopStartFields.setMinutes(undefined);
-    customLoopStartFields.setSeconds(undefined);
-    customLoopEndFields.setMinutes(undefined);
-    customLoopEndFields.setSeconds(undefined);
+    customLoopStartFields.setTime({ minutes: undefined, seconds: undefined });
+    customLoopEndFields.setTime({ minutes: undefined, seconds: undefined });
   };
 
   return (
