@@ -83,9 +83,9 @@ function PlayersList({ song: { youTubeVideos } }: { song: BaseSongMetadata }) {
 
   return (
     <ul className="w-full max-w-[1120px]">
-      {youTubeVideos.map(({ id }) => (
-        <li key={id} className="mt-10 first:mt-0">
-          <Player url={`https://www.youtube.com/watch?v=${id}`} />
+      {youTubeVideos.map((video) => (
+        <li key={video.id} className="mt-10 first:mt-0">
+          <Player video={video} />
         </li>
       ))}
     </ul>

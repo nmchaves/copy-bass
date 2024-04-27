@@ -12,14 +12,14 @@ export interface BaseSongMetadata {
   notes: string | undefined;
 }
 
-interface YouTubeVideoMetadata {
+export interface YouTubeVideoMetadata {
   id: YouTubeVideoID;
   bookmarkedSections?: NonEmptyArray<SongSection>;
 }
 
 type YouTubeVideoID = string;
 
-interface SongSection {
+export interface SongSection {
   label: string;
   start: MinutesSeconds;
   end: MinutesSeconds;

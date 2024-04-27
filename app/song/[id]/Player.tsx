@@ -2,6 +2,7 @@
 
 import { forwardRef, useRef, useState } from "react";
 import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
+import { SongSection, YouTubeVideoMetadata } from "@/lib/songs";
 import { cn } from "@/lib/utils";
 import { secondsFromMinutes } from "@/lib/time";
 import { Button } from "@/components/ui/Button";
@@ -13,7 +14,11 @@ import {
   useMinutesSeconds,
 } from "./MinutesSecondsInputGroup";
 
-export const Player: React.FC<{ url: string }> = ({ url }) => {
+export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
+  video,
+}) => {
+  const url = `https://www.youtube.com/watch?v=${video.id}`;
+
   const youTubePlayerRef = useRef<YouTubePlayer>(null);
 
   // The YouTube player UI already allows the user to customize the playback
@@ -187,6 +192,26 @@ export const Player: React.FC<{ url: string }> = ({ url }) => {
             Clear
           </Button>
         </div>
+        {video.bookmarkedSections?.length && (
+          <div className="mt-6">
+            <h6 className="mb-1 font-semibold">Bookmarks</h6>
+            <ul>
+              {video.bookmarkedSections.map((section) => (
+                <li key={section.label}>
+                  <Bookmark
+                    section={section}
+                    onClick={() => {
+                      const { start, end } = section;
+                      customLoopStartFields.setTime(start);
+                      customLoopEndFields.setTime(end);
+                      playAt(start);
+                    }}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </>
   );
@@ -307,4 +332,28 @@ function isRateChangeProbablyFromPlayerBuiltInControls({
   const msSinceLastReactSliderChange =
     curDate.getTime() - reactSliderPlaybackRateChangeDate.getTime();
   return msSinceLastReactSliderChange >= 500;
+}
+
+interface BookmarkProps {
+  section: SongSection;
+  onClick: () => void;
+}
+
+function Bookmark({ section, onClick }: BookmarkProps) {
+  return (
+    <Button
+      variant="link"
+      // shadcn-ui uses a fixed height for buttons. But I want these buttons to
+      // be a little bit shorter.
+      className="px-0 py-1.5 h-auto"
+      size="sm"
+      onClick={() => onClick()}
+    >
+      {section.label}
+      {" ("}
+      {section.start.minutes}:{section.start.seconds}-{section.end.minutes}:
+      {section.end.seconds}
+      {")"}
+    </Button>
+  );
 }
