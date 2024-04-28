@@ -4,7 +4,7 @@ import { forwardRef, useRef, useState } from "react";
 import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { SongSection, YouTubeVideoMetadata } from "@/lib/songs";
 import { cn } from "@/lib/utils";
-import { secondsFromMinutes } from "@/lib/time";
+import { secondsFromMinutes, formatSecondsTimestamp } from "@/lib/time";
 import { Button } from "@/components/ui/Button";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -340,6 +340,8 @@ interface BookmarkProps {
 }
 
 function Bookmark({ section, onClick }: BookmarkProps) {
+  const { label, start, end } = section;
+
   return (
     <Button
       variant="link"
@@ -349,10 +351,10 @@ function Bookmark({ section, onClick }: BookmarkProps) {
       size="sm"
       onClick={() => onClick()}
     >
-      {section.label}
+      {label}
       {" ("}
-      {section.start.minutes}:{section.start.seconds}-{section.end.minutes}:
-      {section.end.seconds}
+      {start.minutes}:{formatSecondsTimestamp(start.seconds)}-{end.minutes}:
+      {formatSecondsTimestamp(end.seconds)}
       {")"}
     </Button>
   );
