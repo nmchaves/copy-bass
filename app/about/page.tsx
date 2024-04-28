@@ -35,6 +35,7 @@ export default function Page() {
         <ul className="my-6 mx-6 md:mx-12 list-disc">
           <li>List all of the songs I want to practice in 1 place</li>
           <li>Show notes/tips about how to play each song, including tuning</li>
+          <li>Show tabs, if available</li>
           <li>
             Embed videos of covers, live performances, isolated tracks, etc.
           </li>

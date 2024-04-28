@@ -1,11 +1,16 @@
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BaseSongMetadata, songs } from "@/lib/songs";
+import { BaseSongMetadata, TabsMetadata, songs } from "@/lib/songs";
 import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
+import { parseNotesFromTabMakerFile } from "@/server/tabs/tabMaker";
 import { Button } from "@/components/ui/Button";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Player } from "./Player";
+import {
+  ParsedTabsWithLabel,
+  TabsListWithFloatingTabs,
+} from "./TabsListWithFloatingTabs";
 
 const findSongById = (id: string) => songs.find((song) => song.id === id);
 
@@ -33,12 +38,14 @@ export function generateMetadata(
   };
 }
 
-export default function Page({ params }: Props) {
+export default async function Page({ params }: Props) {
   const song = findSongById(params.id);
 
   if (song == null) {
     notFound();
   }
+
+  const parsedTabsList = await parseTabs(song.tabs);
 
   const artistSearchParams = new URLSearchParams();
   artistSearchParams.set(searchQueryKey, song.artist);
@@ -66,6 +73,12 @@ export default function Page({ params }: Props) {
             <p>{song.notes}</p>
           </div>
         )}
+        {parsedTabsList.length > 0 && (
+          <div className="mt-4">
+            <h2 className="font-medium mb-1">Tabs</h2>
+            <TabsListWithFloatingTabs tabsList={parsedTabsList} />
+          </div>
+        )}
       </div>
       <PlayersList song={song} />
     </main>
@@ -89,5 +102,22 @@ function PlayersList({ song: { youTubeVideos } }: { song: BaseSongMetadata }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+async function parseTabs(
+  tabsMetaArr: Array<TabsMetadata> | undefined,
+): Promise<Array<ParsedTabsWithLabel>> {
+  if (tabsMetaArr == null || tabsMetaArr.length === 0) {
+    return [];
+  }
+
+  return Promise.all(
+    tabsMetaArr.map(async (tabsMeta): Promise<ParsedTabsWithLabel> => {
+      const tabs = await parseNotesFromTabMakerFile(
+        tabsMeta.tabMakerExportFilename,
+      );
+      return { tabs, label: tabsMeta.label };
+    }),
   );
 }

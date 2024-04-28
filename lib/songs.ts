@@ -10,7 +10,18 @@ export interface BaseSongMetadata {
   spotifyId: string;
   tuning: string;
   notes: string | undefined;
+  tabs?: NonEmptyArray<TabsMetadata>;
 }
+
+export interface TabsMetadata {
+  label: string;
+  /**
+   * Filename of the tabs file exported from [TabMaker](https://tab-maker.com).
+   */
+  tabMakerExportFilename: TabMakerExportFilename;
+}
+
+type TabMakerExportFilename = `${string}.back`;
 
 export interface YouTubeVideoMetadata {
   id: YouTubeVideoID;
@@ -100,6 +111,12 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     spotifyId: "46tXExmproacf75cfuS9Ui",
     tuning: "Standard",
     notes: undefined,
+    tabs: [
+      {
+        label: "Pre-outro riff",
+        tabMakerExportFilename: "wild_wind_blows_maiden_pre_outro.back",
+      },
+    ],
   },
   {
     id: "everybody-wants-to-rule-the-world-tff",

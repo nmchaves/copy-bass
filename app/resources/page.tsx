@@ -14,6 +14,9 @@ export default function Page() {
       <ExternalResourceLink href="https://www.youtube.com/playlist?list=PLHNte-PbVjgXrkBxoMC4xQMqlJ0RNZq5E">
         Steve Harris Tech 21 Signature Amp Settings
       </ExternalResourceLink>
+      <ExternalResourceLink href="https://tab-maker.com">
+        TabMaker.com (Copy Bass can parse/render files exported from TabMaker)
+      </ExternalResourceLink>
       <ExternalResourceLink href="https://www.musicca.com/circle-of-fifths">
         Circle of Fifths
       </ExternalResourceLink>
