@@ -353,8 +353,8 @@ function Bookmark({ section, onClick }: BookmarkProps) {
     >
       {label}
       {" ("}
-      {start.minutes}:{formatSecondsTimestamp(start.seconds)}-{end.minutes}:
-      {formatSecondsTimestamp(end.seconds)}
+      {start.minutes}:{formatSecondsTimestamp(start.seconds)}&ndash;
+      {end.minutes}:{formatSecondsTimestamp(end.seconds)}
       {")"}
     </Button>
   );
