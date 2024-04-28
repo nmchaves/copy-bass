@@ -42,7 +42,7 @@ export const GenreFilter = () => {
       )}
       onValueChange={(value) => handleSelectChange(value as SelectValue)}
     >
-      <SelectTrigger aria-label="Genre" className="ml-2 w-[240px]">
+      <SelectTrigger aria-label="Genre" className="ml-2 w-[180px] md:w-[240px]">
         <SelectValue placeholder="Genre" />
       </SelectTrigger>
       <SelectContent>
