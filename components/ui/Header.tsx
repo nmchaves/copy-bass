@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 
 export const Header = () => {
   return (
-    <header className="pt-8 pb-12 px-16">
+    <header className="py-8 px-16">
       <nav className="flex items-center justify-center md:justify-normal">
         <Link href="/">
           <Image
