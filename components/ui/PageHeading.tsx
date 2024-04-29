@@ -9,6 +9,10 @@ export const PageHeading = ({
   children: React.ReactNode;
 }) => {
   return (
-    <H1 className={cn("text-center text-cyan-700", className)}>{children}</H1>
+    <H1
+      className={cn("text-center text-cyan-700 dark:text-cyan-500", className)}
+    >
+      {children}
+    </H1>
   );
 };
