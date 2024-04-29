@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/ui/ThemeProvider";
 import { Header } from "@/components/ui/Header";
 import "./globals.css";
 
@@ -36,10 +37,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // See the `next-themes` docs for why we add `suppressHydrationWarning` to `<html>`:
+    // https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header />
-        <div className="p-16 pt-4">{children}</div>
+        <ThemeProvider attribute="class" disableTransitionOnChange>
+          <Header />
+          <div className="p-16 pt-4">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

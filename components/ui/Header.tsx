@@ -2,11 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/copy_bass_logo_west_ham_maroon.png";
 import { Button } from "@/components/ui/Button";
+import { ThemeToggleGroup } from "./ThemeToggleGroup";
 
 export const Header = () => {
   return (
-    <header className="py-8 px-16">
-      <nav className="flex items-center justify-center md:justify-normal">
+    <header className="py-8 px-16 flex items-center justify-between">
+      <nav className="flex items-center justify-center md:justify-normal w-full md:w-auto">
         <Link href="/">
           <Image
             src={logo}
@@ -33,6 +34,7 @@ export const Header = () => {
           <Button variant="link">GitHub Repo</Button>
         </Link>
       </nav>
+      <ThemeToggleGroup className="hidden lg:block" />
     </header>
   );
 };
