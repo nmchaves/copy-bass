@@ -12,6 +12,7 @@ export default function NotFound() {
         alt="Bruce Dickinson searching in a field of flowers"
         width={600}
         height={300}
+        priority
         placeholder="blur"
         className="mb-4"
       />

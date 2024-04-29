@@ -24,6 +24,7 @@ export default function Page() {
           src={realBass}
           alt="An accurate meme explaining that bass guitars are real bass"
           width={300}
+          priority
           placeholder="blur"
           className="mb-6 rounded-sm"
         />

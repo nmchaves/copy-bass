@@ -11,6 +11,7 @@ export const Header = () => {
           <Image
             src={logo}
             height={40}
+            priority
             alt="Copy Bass"
             className="mr-12 hidden md:block"
           />
