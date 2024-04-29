@@ -27,7 +27,7 @@ export const SongCard: React.FC<{
             height={60}
             width={60}
             src={song.spotify.albumImgUrl}
-            className="rounded shadow-md"
+            className="rounded"
           />
         )}
         <div>
