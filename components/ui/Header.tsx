@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/public/logo_west_ham_maroon.png";
+import logo from "@/public/copy_bass_logo_west_ham_maroon.png";
 import { Button } from "@/components/ui/Button";
 
 export const Header = () => {
