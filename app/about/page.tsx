@@ -88,7 +88,9 @@ export default function Page() {
           src={westHamLogo}
           alt="The logo for West Ham United Football Club, which depicts a pair of riveting hammers in a crossing pattern"
           width={240}
-          placeholder="blur"
+          // Don't use `blur` here. It would look a little weird since the
+          // non-transparent part of the logo isn't rectangular. It's a crest.
+          placeholder="empty"
           className="mb-6"
         />
         <p>
