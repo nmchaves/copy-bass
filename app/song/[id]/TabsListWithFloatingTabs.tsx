@@ -40,7 +40,7 @@ export const TabsListWithFloatingTabs: React.FC<
       </ul>
       {selectedTab && (
         <Portal.Root
-          className="z-50 fixed top-3 w-auto max-w-[90%] xl:max-w-[75%] flex items-start justify-between bg-white p-3 rounded border-2 shadow-xl"
+          className="z-50 fixed top-3 w-auto max-w-[90%] xl:max-w-[75%] flex items-start justify-between bg-background p-3 rounded border-2 shadow-xl"
           style={{
             // Horizontally center the element
             left: "50%",
