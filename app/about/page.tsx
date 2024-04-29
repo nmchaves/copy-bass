@@ -86,7 +86,7 @@ export default function Page() {
         </p>
         <Image
           src={westHamLogo}
-          alt="The logo for West Ham United Football Club, which depicts a pair of metallurgy hammers in a crossing pattern"
+          alt="The logo for West Ham United Football Club, which depicts a pair of riveting hammers in a crossing pattern"
           width={240}
           placeholder="blur"
           className="mb-6"
