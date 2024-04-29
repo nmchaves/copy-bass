@@ -149,6 +149,16 @@ export const songs: NonEmptyArray<BaseSongMetadata> = [
     notes: undefined,
   },
   {
+    id: "doctor-doctor-ufo",
+    title: "Doctor Doctor",
+    artist: "UFO",
+    genre: MusicGenre.CLASSIC_ROCK,
+    youTubeVideos: [{ id: "J-U5H6hmw6E" }, { id: "01PuudGxlxg" }],
+    spotifyId: "1soxeK1ZBX9SsSjK4j4ECa",
+    tuning: "Standard",
+    notes: undefined,
+  },
+  {
     id: "africa-toto",
     title: "Africa",
     artist: "TOTO",

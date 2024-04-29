@@ -48,6 +48,7 @@ export const GenreFilter = () => {
       <SelectContent>
         <SelectItem value={allGenresSelectValue}>All</SelectItem>
         {[
+          MusicGenre.CLASSIC_ROCK,
           MusicGenre.EIGHTIES,
           MusicGenre.METAL,
           MusicGenre.POP,

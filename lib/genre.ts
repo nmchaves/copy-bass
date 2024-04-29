@@ -1,4 +1,5 @@
 export enum MusicGenre {
+  CLASSIC_ROCK = "classic_rock",
   EIGHTIES = "eighties",
   METAL = "metal",
   POP = "pop",
@@ -8,6 +9,7 @@ export enum MusicGenre {
 }
 
 export const genreLabelDict: Record<MusicGenre, string> = {
+  [MusicGenre.CLASSIC_ROCK]: "Classic Rock",
   [MusicGenre.EIGHTIES]: "Eighties",
   [MusicGenre.METAL]: "Metal",
   [MusicGenre.POP]: "Pop",
@@ -17,6 +19,7 @@ export const genreLabelDict: Record<MusicGenre, string> = {
 };
 
 export const genreEmojiDict: Record<MusicGenre, string> = {
+  [MusicGenre.CLASSIC_ROCK]: "🗿",
   [MusicGenre.EIGHTIES]: "😎",
   [MusicGenre.METAL]: "🤘",
   [MusicGenre.POP]: "🤩",
