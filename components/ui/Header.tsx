@@ -8,7 +8,7 @@ export const Header = () => {
   return (
     <header className="py-8 px-16 flex items-center justify-between">
       <nav className="flex items-center justify-center md:justify-normal w-full md:w-auto">
-        <Link href="/">
+        <Link href="/" aria-label="Copy Bass homepage">
           <Image
             src={logo}
             height={40}
