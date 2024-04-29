@@ -63,11 +63,11 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
     }
   };
 
-  const playStart = () => {
-    playAt({ minutes: 0, seconds: 0 });
-  };
-
-  const playCustomLoop = () => {
+  /**
+   * Play the video, beginning at the start of the custom loop or the start of
+   * the video if there is no custom loop set.
+   */
+  const playLoop = () => {
     playAt({
       minutes: customLoopStartFields.minutes ?? 0,
       seconds: customLoopStartFields.seconds ?? 0,
@@ -118,12 +118,12 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
               customLoopEndFields.totalSeconds != null &&
               playedSeconds >= customLoopEndFields.totalSeconds
             ) {
-              playCustomLoop();
+              playLoop();
             }
           }}
           // Use `onEnded` instead of `loop` so we can account for custom loops.
           loop={false}
-          onEnded={() => playStart()}
+          onEnded={() => playLoop()}
         />
       </ResponsivePlayerWrapper>
 
@@ -180,7 +180,7 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
             className="mr-2"
             size="sm"
             variant="secondary"
-            onClick={() => playCustomLoop()}
+            onClick={() => playLoop()}
           >
             Go
           </Button>
