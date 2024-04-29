@@ -43,12 +43,7 @@ const TabMakerTabsSchema = z.object({
 export async function parseNotesFromTabMakerFile(
   tabMakerExportFilename: string,
 ): Promise<TabNotes> {
-  // See Next.js guide on loading data from a file:
-  // https://vercel.com/guides/loading-static-file-nextjs-api-route
-  const file = await readFile(
-    process.cwd() + `/server/tabs/tabMakerExports/${tabMakerExportFilename}`,
-    "utf8",
-  );
+  const file = await readTabMakerFile(tabMakerExportFilename);
 
   // TabMaker Base64 encodes the data. Let's decode it.
   const jsonStr = atob(file);
@@ -57,4 +52,24 @@ export async function parseNotesFromTabMakerFile(
 
   const parsedData = TabMakerTabsSchema.parse(obj);
   return parsedData.state.tabs[0].notes;
+}
+
+// ! WARNING
+// If you move the TabMaker export files to another dir, you MUST update the
+// `outputFileTracingIncludes` config option in `next.config.mjs` to reflect
+// the change. Otherwise, the TabMaker export files will not be included in
+// the build on Vercel.
+const TAB_MAKER_EXPORTS_PATH = "/server/tabs/tabMakerExports";
+
+async function readTabMakerFile(
+  tabMakerExportFilename: string,
+): Promise<string> {
+  // See Next.js guide on loading data from a file:
+  // https://vercel.com/guides/loading-static-file-nextjs-api-route
+  const file = await readFile(
+    process.cwd() + `${TAB_MAKER_EXPORTS_PATH}/${tabMakerExportFilename}`,
+    "utf8",
+  );
+
+  return file;
 }
