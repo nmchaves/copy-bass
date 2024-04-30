@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import { BaseSongMetadata, songs } from "@/lib/songs";
 import { zipWith } from "@/lib/utils";
@@ -21,26 +22,28 @@ interface AlbumImage {
   url: string;
 }
 
-export async function fetchTracks(
-  songs: Array<Pick<BaseSongMetadata, "spotifyId">>,
-): Promise<Array<Track>> {
-  // TODO: Test if `spotify-web-api-node` handles batching.
-  if (songs.length > 100) {
-    throw new Error(
-      `The fetchTracks function cannot currently handle more than 100 songs. But it received ${songs.length} songs. The Spotify tracks endpoint accepts a max of 100 IDs. ` +
-        "To handle more than 100 songs, we'll need to implement batching.",
-    );
-  }
+export const fetchTracks = cache(
+  async (
+    songs: Array<Pick<BaseSongMetadata, "spotifyId">>,
+  ): Promise<Array<Track>> => {
+    // TODO: Test if `spotify-web-api-node` handles batching.
+    if (songs.length > 100) {
+      throw new Error(
+        `The fetchTracks function cannot currently handle more than 100 songs. But it received ${songs.length} songs. The Spotify tracks endpoint accepts a max of 100 IDs. ` +
+          "To handle more than 100 songs, we'll need to implement batching.",
+      );
+    }
 
-  const spotifySongIds = songs.map((song) => song.spotifyId);
+    const spotifySongIds = songs.map((song) => song.spotifyId);
 
-  const credsGrantRes = await spotifyApi.clientCredentialsGrant();
-  const accessToken = credsGrantRes.body.access_token;
-  spotifyApi.setAccessToken(accessToken);
+    const credsGrantRes = await spotifyApi.clientCredentialsGrant();
+    const accessToken = credsGrantRes.body.access_token;
+    spotifyApi.setAccessToken(accessToken);
 
-  const tracksRes = await spotifyApi.getTracks(spotifySongIds);
-  return tracksRes.body.tracks;
-}
+    const tracksRes = await spotifyApi.getTracks(spotifySongIds);
+    return tracksRes.body.tracks;
+  },
+);
 
 export interface SongWithSpotifyMetadata extends BaseSongMetadata {
   spotify: SpotifySongMetadata | undefined;
