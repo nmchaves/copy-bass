@@ -43,7 +43,7 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" disableTransitionOnChange>
           <Header />
-          <div className="p-16 pt-4">{children}</div>
+          <div className="p-8 pt-4 md:p-16 md:pt-4">{children}</div>
         </ThemeProvider>
       </body>
     </html>
