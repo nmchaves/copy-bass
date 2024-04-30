@@ -1,59 +1,30 @@
 import "server-only";
-import { z } from "zod";
+import SpotifyWebApi from "spotify-web-api-node";
 import { BaseSongMetadata, songs } from "@/lib/songs";
 import { zipWith } from "@/lib/utils";
 import { serverEnv } from "./serverEnv";
 
-const AccessTokenResponseSchema = z.object({
-  access_token: z.string().min(1),
+const spotifyApi = new SpotifyWebApi({
+  clientId: serverEnv.SPOTIFY_CLIENT_ID,
+  clientSecret: serverEnv.SPOTIFY_CLIENT_SECRET,
 });
 
-async function fetchAccessToken() {
-  // See the Client Credentials example in Spotify's `web-api-examples` repo:
-  // https://github.com/spotify/web-api-examples/tree/master/authorization/client_credentials
-  const res = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-    }),
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization:
-        "Basic " +
-        Buffer.from(
-          `${serverEnv.SPOTIFY_CLIENT_ID}:${serverEnv.SPOTIFY_CLIENT_SECRET}`,
-        ).toString("base64"),
-    },
-  });
-
-  const { access_token } = await res
-    .json()
-    .then((data) => AccessTokenResponseSchema.parse(data));
-
-  return access_token;
+export interface Track {
+  album: Album;
 }
 
-const AlbumImageSchema = z.object({
-  url: z.string().url(),
-});
+interface Album {
+  images: Array<AlbumImage>;
+}
 
-const AlbumSchema = z.object({
-  images: z.array(AlbumImageSchema),
-});
-
-const TrackSchema = z.object({
-  album: AlbumSchema,
-});
-
-export type Track = z.TypeOf<typeof TrackSchema>;
-
-const TracksResponseSchema = z.object({
-  tracks: z.array(TrackSchema),
-});
+interface AlbumImage {
+  url: string;
+}
 
 export async function fetchTracks(
   songs: Array<Pick<BaseSongMetadata, "spotifyId">>,
 ): Promise<Array<Track>> {
+  // TODO: Test if `spotify-web-api-node` handles batching.
   if (songs.length > 100) {
     throw new Error(
       `The fetchTracks function cannot currently handle more than 100 songs. But it received ${songs.length} songs. The Spotify tracks endpoint accepts a max of 100 IDs. ` +
@@ -63,23 +34,12 @@ export async function fetchTracks(
 
   const spotifySongIds = songs.map((song) => song.spotifyId);
 
-  const accessToken = await fetchAccessToken();
+  const credsGrantRes = await spotifyApi.clientCredentialsGrant();
+  const accessToken = credsGrantRes.body.access_token;
+  spotifyApi.setAccessToken(accessToken);
 
-  const res = await fetch(
-    `https://api.spotify.com/v1/tracks?ids=${spotifySongIds.join(",")}`,
-    {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    },
-  );
-
-  const { tracks } = await res
-    .json()
-    .then((data) => TracksResponseSchema.parse(data));
-
-  return tracks;
+  const tracksRes = await spotifyApi.getTracks(spotifySongIds);
+  return tracksRes.body.tracks;
 }
 
 export interface SongWithSpotifyMetadata extends BaseSongMetadata {
