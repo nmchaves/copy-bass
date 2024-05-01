@@ -105,7 +105,12 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
         <ClientOnlyYouTubePlayer
           ref={youTubePlayerRef}
           url={url}
-          className={responsivePlayerStyling.className}
+          className={cn(
+            responsivePlayerStyling.className,
+            // Apply border-radius to the YouTube player's iframe, which is nested
+            // a couple of layers down.
+            "[&_iframe]:rounded",
+          )}
           width={responsivePlayerStyling.width}
           height={responsivePlayerStyling.height}
           controls={true}
