@@ -22,6 +22,8 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
 
   const youTubePlayerRef = useRef<YouTubePlayer>(null);
 
+  const playerWrapperRef = useRef<HTMLDivElement>(null);
+
   // The YouTube player UI already allows the user to customize the playback
   // speed. But I don't like repeatedly opening/closing those settings while I'm
   // practicing.
@@ -80,9 +82,18 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
     customLoopEndFields.setTime({ minutes: undefined, seconds: undefined });
   };
 
+  const scrollPlayerToCenterOfScreen = () => {
+    if (playerWrapperRef.current) {
+      playerWrapperRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  };
+
   return (
     <>
-      <AspectRatio ratio={16 / 9}>
+      <AspectRatio ratio={16 / 9} ref={playerWrapperRef}>
         <Skeleton
           hidden={isPlayerReady}
           className={responsivePlayerStyling.className}
@@ -205,6 +216,9 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
                       const { start, end } = section;
                       customLoopStartFields.setTime(start);
                       customLoopEndFields.setTime(end);
+
+                      scrollPlayerToCenterOfScreen();
+
                       playAt(start);
                     }}
                   />
