@@ -1,5 +1,5 @@
 import "server-only";
-import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import SpotifyWebApi from "spotify-web-api-node";
 import { BaseSongMetadata, songs } from "@/lib/songs";
 import { zipWith } from "@/lib/utils";
@@ -22,7 +22,7 @@ interface AlbumImage {
   url: string;
 }
 
-export const fetchTracks = cache(
+export const fetchTracks = unstable_cache(
   async (
     songs: Array<Pick<BaseSongMetadata, "spotifyId">>,
   ): Promise<Array<Track>> => {
