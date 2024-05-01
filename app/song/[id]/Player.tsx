@@ -5,6 +5,7 @@ import YouTubePlayer, { YouTubePlayerProps } from "react-player/youtube";
 import { SongSection, YouTubeVideoMetadata } from "@/lib/songs";
 import { cn } from "@/lib/utils";
 import { secondsFromMinutes, formatSecondsTimestamp } from "@/lib/time";
+import { AspectRatio } from "@/components/ui/AspectRatio";
 import { Button } from "@/components/ui/Button";
 import { ClientOnly } from "@/components/ui/ClientOnly";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -81,7 +82,7 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
 
   return (
     <>
-      <ResponsivePlayerWrapper>
+      <AspectRatio ratio={16 / 9}>
         <Skeleton
           hidden={isPlayerReady}
           className={responsivePlayerStyling.className}
@@ -125,7 +126,7 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
           loop={false}
           onEnded={() => playLoop()}
         />
-      </ResponsivePlayerWrapper>
+      </AspectRatio>
 
       <div className={cn("w-2/3 mx-auto mt-2", { invisible: !isPlayerReady })}>
         <div className="mb-2 flex items-center justify-between">
@@ -234,14 +235,6 @@ const ClientOnlyYouTubePlayer: React.FC<YouTubePlayerProps> = forwardRef<
   </ClientOnly>
 ));
 ClientOnlyYouTubePlayer.displayName = "ClientOnlyYouTubePlayer";
-
-/**
- * A wrapper to make the player responsive. For more info, see the docs:
- * https://github.com/cookpete/react-player?tab=readme-ov-file#responsive-player
- */
-function ResponsivePlayerWrapper({ children }: { children: React.ReactNode }) {
-  return <div className={"relative pt-[56.25%] mx-auto"}>{children}</div>;
-}
 
 /**
  * Some styling to apply to both the player (which should be responsive) and the
