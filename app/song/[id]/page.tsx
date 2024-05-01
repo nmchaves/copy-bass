@@ -6,7 +6,7 @@ import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
 import { parseNotesFromTabMakerFile } from "@/server/tabs/tabMaker";
 import { Button } from "@/components/ui/Button";
 import { PageHeading } from "@/components/ui/PageHeading";
-import { Player } from "./Player";
+import { PlayersList } from "./PlayersList";
 import {
   ParsedTabsWithLabel,
   TabsListWithFloatingTabs,
@@ -82,26 +82,6 @@ export default async function Page({ params }: Props) {
       </div>
       <PlayersList song={song} />
     </main>
-  );
-}
-
-function PlayersList({ song: { youTubeVideos } }: { song: BaseSongMetadata }) {
-  if (youTubeVideos.length === 0) {
-    return (
-      <div>
-        This song doesn&apos;t have any YouTube videos associated with it yet.
-      </div>
-    );
-  }
-
-  return (
-    <ul className="w-full max-w-[1120px]">
-      {youTubeVideos.map((video) => (
-        <li key={video.id} className="mt-10 first:mt-0">
-          <Player video={video} />
-        </li>
-      ))}
-    </ul>
   );
 }
 
