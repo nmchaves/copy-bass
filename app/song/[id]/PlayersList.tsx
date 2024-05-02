@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { BaseSongMetadata } from "@/lib/songs";
 import { Player } from "./Player";
 
@@ -6,6 +9,8 @@ export function PlayersList({
 }: {
   song: BaseSongMetadata;
 }) {
+  const [playingVideoId, setPlayingVideoId] = useState<string>();
+
   if (youTubeVideos.length === 0) {
     return (
       <div>
@@ -18,7 +23,16 @@ export function PlayersList({
     <ul className="w-full max-w-[1120px]">
       {youTubeVideos.map((video) => (
         <li key={video.id} className="mt-10 first:mt-0">
-          <Player video={video} />
+          <Player
+            video={video}
+            playing={playingVideoId === video.id}
+            onPlay={() => setPlayingVideoId(video.id)}
+            onPause={() => {
+              if (playingVideoId === video.id) {
+                setPlayingVideoId(undefined);
+              }
+            }}
+          />
         </li>
       ))}
     </ul>

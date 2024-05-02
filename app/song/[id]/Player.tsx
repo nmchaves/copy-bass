@@ -15,8 +15,16 @@ import {
   useMinutesSeconds,
 } from "./MinutesSecondsInputGroup";
 
-export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
+interface PlayerProps
+  extends Required<Pick<YouTubePlayerProps, "playing" | "onPlay" | "onPause">> {
+  video: YouTubeVideoMetadata;
+}
+
+export const Player: React.FC<PlayerProps> = ({
   video,
+  playing,
+  onPlay,
+  onPause,
 }) => {
   const url = `https://www.youtube.com/watch?v=${video.id}`;
 
@@ -47,11 +55,6 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
   const customLoopStartFields = useMinutesSeconds();
   const customLoopEndFields = useMinutesSeconds();
 
-  // When the user specifies a custom loop, the video should automatically play
-  // at the start of the custom loop. However, the `seekTo` method doesn't do
-  // that. So we need to manage the playing state manually.
-  const [isPlaying, setIsPlaying] = useState(false);
-
   const playAt = ({
     minutes,
     seconds,
@@ -62,7 +65,7 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
     if (youTubePlayerRef.current) {
       const totalSeconds = secondsFromMinutes(minutes) + seconds;
       youTubePlayerRef.current.seekTo(totalSeconds);
-      setIsPlaying(true);
+      onPlay();
     }
   };
 
@@ -114,10 +117,10 @@ export const Player: React.FC<{ video: YouTubeVideoMetadata }> = ({
           width={responsivePlayerStyling.width}
           height={responsivePlayerStyling.height}
           controls={true}
-          playing={isPlaying}
+          playing={playing}
           onReady={() => setIsPlayerReady(true)}
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
+          onPlay={onPlay}
+          onPause={onPause}
           onDuration={(duration) => setTrackDuration(duration)}
           playbackRate={playbackRate}
           onPlaybackRateChange={(newRate: number) => {
