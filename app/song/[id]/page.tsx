@@ -1,7 +1,7 @@
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { BaseSongMetadata, TabsMetadata, songs } from "@/lib/songs";
+import { TabsMetadata, songs } from "@/lib/songs";
 import { searchQueryKey } from "@/lib/songFilterRoutingConstants";
 import { parseNotesFromTabMakerFile } from "@/server/tabs/tabMaker";
 import { Button } from "@/components/ui/Button";
