@@ -2,23 +2,43 @@ import "server-only";
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
 
-// TODO: Add support for ghost notes, hammer-ons, and pull-offs.
-
 const FretNumber = z.number().int().nonnegative().brand<"FretNumber">();
 export type FretNumber = z.TypeOf<typeof FretNumber>;
 
-const NullableFretNumber = FretNumber.nullable().brand<"NullableFretNumber">();
-export type NullableFretNumber = z.TypeOf<typeof NullableFretNumber>;
+enum TabMakerNonNumericSymbol {
+  GHOST_NOTE = "x",
+  HAMMER_ON = "h",
+  PULL_OFF = "p",
+  SLIDE_UP = "/",
+  // Note: The symbol is just a backslash, but it needs to be escaped here.
+  SLIDE_DOWN = "\\",
+}
+
+const TabMakerNonNumericSymbolZodEnum = z.enum([
+  TabMakerNonNumericSymbol.GHOST_NOTE,
+  TabMakerNonNumericSymbol.HAMMER_ON,
+  TabMakerNonNumericSymbol.PULL_OFF,
+  TabMakerNonNumericSymbol.SLIDE_UP,
+  TabMakerNonNumericSymbol.SLIDE_DOWN,
+]);
+
+const TabColumnValue = z.union([
+  z.null(),
+  FretNumber,
+  TabMakerNonNumericSymbolZodEnum,
+]);
+
+export type TabColumnValue = z.TypeOf<typeof TabColumnValue>;
 
 const TabColumn = z.tuple([
   // G string (assuming standard tuning)
-  NullableFretNumber,
+  TabColumnValue,
   // D string (assuming standard tuning)
-  NullableFretNumber,
+  TabColumnValue,
   // A string (assuming standard tuning)
-  NullableFretNumber,
+  TabColumnValue,
   // E string (assuming standard tuning)
-  NullableFretNumber,
+  TabColumnValue,
 ]);
 export type TabColumn = z.TypeOf<typeof TabColumn>;
 

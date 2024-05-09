@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import type {
-  NullableFretNumber,
+  TabColumnValue,
   TabColumn,
   TabNotes,
 } from "@/server/tabs/tabMaker";
@@ -35,10 +35,10 @@ export function BassTabs({ tabs, className }: BassTabsProps) {
 function TabColumn({ column }: { column: TabColumn }) {
   return (
     <div>
-      <Note fretNumber={column[0]} />
-      <Note fretNumber={column[1]} />
-      <Note fretNumber={column[2]} />
-      <Note fretNumber={column[3]} />
+      <Note value={column[0]} />
+      <Note value={column[1]} />
+      <Note value={column[2]} />
+      <Note value={column[3]} />
     </div>
   );
 }
@@ -59,13 +59,13 @@ function StringLabel({ label }: { label: string | null }) {
 // this. And dash is fine. But in practice, the en dash looks best for this.
 const EN_DASH = "–";
 
-function Note({ fretNumber }: { fretNumber: NullableFretNumber }) {
+function Note({ value }: { value: TabColumnValue }) {
   return (
     <div
       className="py-0.5 px-0 w-6 tabular-nums font-semibold text-center"
-      aria-label={fretNumber != null ? `Fret ${fretNumber}` : "No fret"}
+      aria-label={value != null ? `Fret ${value}` : "No fret"}
     >
-      {fretNumber ?? EN_DASH}
+      {value ?? EN_DASH}
     </div>
   );
 }
