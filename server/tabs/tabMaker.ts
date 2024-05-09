@@ -46,11 +46,12 @@ export type TabNotes = Array<TabColumn>;
 
 const TabMakerTabsSchema = z.object({
   state: z.object({
-    tabs: z.object({
-      "0": z.object({
+    tabs: z.record(
+      z.string(),
+      z.object({
         notes: z.array(TabColumn),
       }),
-    }),
+    ),
   }),
 });
 
@@ -71,7 +72,16 @@ export async function parseNotesFromTabMakerFile(
   const obj = JSON.parse(jsonStr);
 
   const parsedData = TabMakerTabsSchema.parse(obj);
-  return parsedData.state.tabs[0].notes;
+
+  // Arbitrarily return the 1st set of tabs from the list. We don't need to
+  // support TabMaker files with multiple sets of tabs. Note that we can't
+  // guarantee that the 1st set of tabs will be stored under state.tabs["0"]
+  // though. In some cases, I've seen TabMaker use a key of "1" instead...maybe
+  // that happens if you create 2 sets of tabs but only end up keeping the 2nd.
+  // This is why we use `Object.values`.
+  const targetTabs = Object.values(parsedData.state.tabs)[0];
+
+  return targetTabs.notes;
 }
 
 // ! WARNING
