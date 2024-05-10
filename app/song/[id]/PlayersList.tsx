@@ -237,6 +237,10 @@ const useMaxIntersectionItem = ({
       for (const liNode of liNodeRefs) {
         observer.observe(liNode);
       }
+
+      return () => {
+        observer.disconnect();
+      };
     },
     // Only run this effect once. We only want to create one Intersection
     // Observer instance.
