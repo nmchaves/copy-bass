@@ -6,6 +6,8 @@ import { BaseSongMetadata } from "@/lib/songs";
 import { Button } from "@/components/ui/Button";
 import { Player } from "./Player";
 
+const LI_VIDEO_ID_DATA_ATTR_NAME = "data-video-id";
+
 /**
  * A Map of video IDs to the corresponding <li> node.
  */
@@ -111,6 +113,7 @@ export function PlayersList({
         {youTubeVideos.map((video) => (
           <li
             key={video.id}
+            {...{ [LI_VIDEO_ID_DATA_ATTR_NAME]: video.id }}
             id={video.id}
             className="mt-10 first:mt-0"
             ref={(liNode) => {
@@ -260,7 +263,7 @@ function getMaxIntersectionItem(
       entry.intersectionRatio > maxItem.intersectionRatio
     ) {
       maxItem = {
-        videoId: entry.target.id,
+        videoId: entry.target.getAttribute(LI_VIDEO_ID_DATA_ATTR_NAME)!,
         intersectionRatio: entry.intersectionRatio,
       };
     }
