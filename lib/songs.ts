@@ -1,5 +1,4 @@
 import { MusicGenre } from "./genre";
-import { NonEmptyArray } from "./types";
 
 export interface BaseSongMetadata {
   id: string;
